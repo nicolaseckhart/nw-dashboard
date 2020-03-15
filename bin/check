@@ -1,0 +1,20 @@
+#!/bin/sh
+
+working_dir="$(dirname "$0")"
+source "$working_dir/helper"
+
+step_echo "Linting javascript files"
+yarn lint
+if [ $? -ne 0 ]; then
+  echo_red "[NOK] - Javascript code style issues detected"
+  exit 1
+fi
+
+step_echo "Running javascript tests"
+yarn test
+if [ $? -ne 0 ]; then
+  echo_red "[NOK] - Javascript tests did not run successfully"
+  exit 1
+fi
+
+echo_green "bin/check completed all checks successfully"

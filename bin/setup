@@ -1,0 +1,18 @@
+#!/bin/sh
+
+working_dir="$(dirname "$0")"
+source "$working_dir/helper"
+
+node_version="$(node --version)"
+if [ $node_version != "v13.7.0" ]; then
+  echo_yellow "[WARNING]: You are not running node 13.7.0. The app may not function as expected."
+fi
+
+step_echo "Installing dependencies"
+yarn install
+if [ $? -ne 0 ]; then
+  echo_red "[NOK] - Something went wrong while installing your dependencies"
+  exit 1
+fi
+
+echo_green "bin/setup completed all tasks successfully."

@@ -1,0 +1,28 @@
+#!/bin/sh
+
+set -e
+
+RED='\033[0;31m'
+GREEN='\033[0;32m'
+YELLOW='\033[1;33m'
+NO_COLOR='\033[0m'
+
+step_echo()
+{
+  echo "\n\033[100m $1 \033[49m\n"
+}
+
+echo_green()
+{
+  echo "\n${GREEN}$1 ${NO_COLOR}\n"
+}
+
+echo_red()
+{
+  echo "\n${RED}$1 ${NO_COLOR}"
+}
+
+echo_yellow()
+{
+  echo "\n${YELLOW}$1 ${NO_COLOR}"
+}
