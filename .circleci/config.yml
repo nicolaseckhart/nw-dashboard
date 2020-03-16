@@ -23,5 +23,5 @@ jobs:
           fingerprints:
             - "00:6f:05:7e:2d:55:71:31:d3:23:24:83:47:ca:12:1e"
       - run: echo 'boniweb.ch ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQDaejNRvQMyo+E4p6MSqfE9lsb39Me3dIROQKOC7+1U8fj9uHg+cMa9t8JNmjxXPb0hyB9iV44C6tt9YGuF1xifCK5oGt1Iv0WFJ/c/Qjo9Yk/aH1XqMQNUGnZaAMCHeKbVxIVlw0HH4I+1sbqr5ZTPT8NmZzUcDbLi/Vl3TVgcqJZ+iGM0aQioQbVqYgf1umJYktAhRu0353Sgbt91rs8T0J8ENqfh0tg2XGAEj2Nz1ps6Vwuyo03fSoDk74qMyyAY2EKmxazjVAdzt56cqosh8NO86sREkpX3ZsAbm0SX4YcS2umXGIAtqKRCdv5mkn2cW4LO/KvnrGd7VH4j98lR' >> ~/.ssh/known_hosts
-      - run: scp /home/circleci/nw-dashboard/dist/* boro@boniweb.ch:/var/www/aetherbergbau.com/
+      - run: scp /home/circleci/nw-dashboard/dist/ boro@boniweb.ch:/var/www/aetherbergbau.com/
 
