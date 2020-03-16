@@ -6,7 +6,7 @@ defaults: &defaults
 
 workflows:
   version: 2
-  dependencies_and_build:
+  build_and_deploy:
     jobs:
       - dependencies
       - build:
@@ -34,6 +34,9 @@ jobs:
           name: install-deps
           command: 'sudo yarn install'
       - run:
+          name: "Ignore build warnings"
+          command: echo 'export CI=false' >> $BASH_ENV
+      - run:
           name: build
           command: 'yarn build'
   deploy:
@@ -44,6 +47,9 @@ jobs:
       - run:
           name: install-deps
           command: 'sudo yarn install'
+      - run:
+          name: "Ignore build warnings"
+          command: echo 'export CI=false' >> $BASH_ENV
       - run:
           name: build
           command: 'yarn build'
