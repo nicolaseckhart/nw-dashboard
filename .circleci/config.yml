@@ -1,16 +1,30 @@
 version: 2.1
+defaults: &defaults
+  working_directory: /home/circleci/nw-dashboard
+  docker:
+    - image: circleci/node:latest
 jobs:
-  build:
-    docker:
-      - image: circleci/node:latest
+  dependencies:
+    <<: *defaults
+
     steps:
       - checkout
       - run:
           name: install-deps
           command: 'sudo yarn install'
-      - run:
-          name: run-tests
-          command: 'yarn test'
+  build:
+    <<: *defaults
+
+    steps:
       - run:
           name: build
           command: 'yarn build'
+  deploy:
+    <<: *defaults
+
+    steps:
+      - attach_workspace:
+          at: /home/circleci
+      - add_ssh_keys
+      - run: echo 'THE FINGERPRINT' >> ~/.ssh/known_hosts
+      - run: scp /home/circleci/nw-dashboard/dist ssh -o StrictHostKeyChecking=no boro@boniweb.ch:/var/www/aetherbergbau.com/ -p 22
