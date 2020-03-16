@@ -28,5 +28,5 @@ jobs:
           command: ssh boro@boniweb.ch "rm -rf /var/www/aetherbergbau.com/*"
       - run:
           name: upload to remote folder
-          command: scp -r /home/circleci/nw-dashboard/build boro@boniweb.ch:/var/www/aetherbergbau.com/
+          command: scp -r /home/circleci/nw-dashboard/build/. boro@boniweb.ch:/var/www/aetherbergbau.com
 
