@@ -3,6 +3,19 @@ defaults: &defaults
   working_directory: /home/circleci/nw-dashboard
   docker:
     - image: circleci/node:latest
+
+workflows:
+  version: 2
+  dependencies_and_build:
+    jobs:
+      - dependencies
+      - build:
+          requires:
+            - dependencies
+      - deploy:
+          requires:
+            - build
+
 jobs:
   dependencies:
     <<: *defaults
@@ -29,12 +42,3 @@ jobs:
       - run: echo 'THE FINGERPRINT' >> ~/.ssh/known_hosts
       - run: scp /home/circleci/nw-dashboard/dist ssh -o StrictHostKeyChecking=no boro@boniweb.ch:/var/www/aetherbergbau.com/ -P 22
 
-workflows:
-  version: 2
-  dependencies_and_build:
-    jobs:
-      - dependencies
-      - build:
-          requires:
-            - dependencies
-      - deploy
