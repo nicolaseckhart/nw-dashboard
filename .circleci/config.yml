@@ -4,42 +4,8 @@ defaults: &defaults
   docker:
     - image: circleci/node:latest
 
-workflows:
-  version: 2
-  build_and_deploy:
-    jobs:
-      - dependencies
-      - build:
-          requires:
-            - dependencies
-      - deploy:
-          requires:
-            - build
-
 jobs:
-  dependencies:
-    <<: *defaults
-
-    steps:
-      - checkout
-      - run:
-          name: install-deps
-          command: 'sudo yarn install'
-  build:
-    <<: *defaults
-
-    steps:
-      - checkout
-      - run:
-          name: install-deps
-          command: 'sudo yarn install'
-      - run:
-          name: "Ignore build warnings"
-          command: echo 'export CI=false' >> $BASH_ENV
-      - run:
-          name: build
-          command: 'yarn build'
-  deploy:
+  build_and_deploy:
     <<: *defaults
 
     steps:
