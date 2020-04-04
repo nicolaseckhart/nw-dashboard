@@ -3,7 +3,6 @@ import { Sensor } from '../../shared';
 import { SensorCard } from '../SensorCard/SensorCard';
 import * as React from 'react';
 import SensorData from '../../models/SensorData';
-import WeatherSummary from '../WeatherSummary/WeatherSummary';
 import { Loading } from '../Loading/Loading';
 
 interface Props {

@@ -1,6 +1,6 @@
 import * as React from 'react';
 import ReactAnimatedWeather from 'react-animated-weather';
-import { apiRequestOptions, DailyWeather } from '../../shared';
+import { apiRequestOptions } from '../../shared';
 import { Col, Row } from 'react-bootstrap';
 import { Loading } from '../Loading/Loading';
 import WeatherData from '../../models/WeatherData';
