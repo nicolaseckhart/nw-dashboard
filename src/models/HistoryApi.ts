@@ -197,7 +197,7 @@ export default class HistoryApi {
   }
 
   otherSensors(): string[] {
-    return Object.keys(HistoryApi.SENSORS).filter(s => s !== this.sensor);
+    return Object.keys(HistoryApi.SENSORS).filter((s) => s !== this.sensor);
   }
 
   validScopeChange(scope: HistoryScope) {

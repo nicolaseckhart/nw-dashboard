@@ -76,6 +76,11 @@ export interface GraphicsCard {
   hashRateDcr: number;
 }
 
+export interface WSUpdate {
+  type: string;
+  clients: string[];
+}
+
 export interface JsonSensorDump {
   air: {
     intake_coolant: {
@@ -160,4 +165,9 @@ export interface JsonMiningDump {
     eth: string;
     dcr: string;
   };
+}
+
+export interface JsonWSUpdateDump {
+  type: string;
+  clients: string[];
 }
