@@ -73,12 +73,13 @@ export class App extends React.Component<{}, State> {
           this.setState({ miningData: new MiningData(data) });
         });
         this.socket.on('ws-update', (data: JsonWSUpdateDump) => {
+          const wsUpdate = new WSUpdateData(data);
           this.setState({
-            serviceStates: new WSUpdateData(data),
+            serviceStates: wsUpdate,
             allServicesOnline:
-              this.state.serviceStates.update.clients.includes('nwmon_pi') &&
-              this.state.serviceStates.update.clients.includes('nwmon_rig') &&
-              this.state.serviceStates.update.clients.includes('nwcam'),
+              wsUpdate.update.clients.includes('nwmon_pi') &&
+              wsUpdate.update.clients.includes('nwmon_rig') &&
+              wsUpdate.update.clients.includes('nwcam'),
           });
         });
       });
