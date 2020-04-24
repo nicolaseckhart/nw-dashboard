@@ -14,6 +14,7 @@ import { NotFound } from './components/NotFound/NotFound';
 import { MiningOverview } from './components/MiningOverview/MiningOverview';
 import WeatherSummary from './components/WeatherSummary/WeatherSummary';
 import SocketDownMessage from './components/SocketDownMessage/SocketDownMessage';
+import { PlantOverview } from './components/PlantOverview/PlantOverview';
 
 interface State {
   sensorData: SensorData | null;
@@ -107,10 +108,10 @@ export class App extends React.Component<{}, State> {
           <Navbar.Toggle aria-controls="navigation" />
           <Navbar.Collapse id="navigation">
             <Nav className="mr-auto">
-              <Link to="/mining">
+              <Link to="/plant">
                 <Nav.Item className="mr-5">
-                  Mining
-                  <span className="jam jam-coin ml-2" />
+                  Plant
+                  <span className="jam jam-branch ml-2" />
                 </Nav.Item>
               </Link>
               <Link to="/history/intakecoolant/day">
@@ -123,6 +124,12 @@ export class App extends React.Component<{}, State> {
                 <Nav.Item className="mr-5">
                   Webcams
                   <span className="jam jam-camera-alt ml-2" />
+                </Nav.Item>
+              </Link>
+              <Link to="/mining">
+                <Nav.Item className="mr-5">
+                  Mining
+                  <span className="jam jam-coin ml-2" />
                 </Nav.Item>
               </Link>
             </Nav>
@@ -173,6 +180,9 @@ export class App extends React.Component<{}, State> {
             <Route exact path="/">
               <Dashboard sensorData={this.state.sensorData} />
               <WeatherSummary />
+            </Route>
+            <Route exact path="/plant">
+              <PlantOverview />
             </Route>
             <Route exact path="/mining">
               <MiningOverview miningData={this.state.miningData} />
