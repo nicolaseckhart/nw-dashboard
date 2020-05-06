@@ -2,18 +2,18 @@ import moment, { Moment } from 'moment';
 
 const transformWeekDifferenceBy = (transformation: number) => (difference: number) => difference + transformation;
 const weeks = [
-  'Seedling',
-  'Early Growth',
-  'Late Growth',
-  'Transition',
-  'Early Bloom',
-  'Early Bloom',
-  'Mid Bloom',
-  'Mid Bloom',
-  'Mid Bloom',
-  'Late Bloom',
-  'Ripen',
-  'Flush',
+  'Week 1 - Seedling',
+  'Week 2 - Early Growth',
+  'Week 3 - Late Growth',
+  'Week 4 - Transition',
+  'Week 5 - Early Bloom',
+  'Week 6 - Early Bloom',
+  'Week 7 - Mid Bloom',
+  'Week 8 - Mid Bloom',
+  'Week 9 - Mid Bloom',
+  'Week 10 - Late Bloom',
+  'Week 11 - Ripen',
+  'Week 12 - Flush',
 ];
 
 export default class GrowthProgram {
