@@ -13,14 +13,14 @@ exports[`SensorCard renders the component correctly 1`] = `
     to="/history/intakecoolant/day"
   >
     <div
-      className="sensor-card blue-accent"
+      className="info-card blue-accent"
     >
       <h4
         className="text-muted font-weight-lighter"
       >
         Intake Coolant
       </h4>
-      <ForwardRef
+      <Row
         key="0"
         noGutters={false}
       >
@@ -64,8 +64,8 @@ exports[`SensorCard renders the component correctly 1`] = `
         >
            °C
         </Col>
-      </ForwardRef>
-      <ForwardRef
+      </Row>
+      <Row
         key="1"
         noGutters={false}
       >
@@ -109,7 +109,7 @@ exports[`SensorCard renders the component correctly 1`] = `
         >
           %
         </Col>
-      </ForwardRef>
+      </Row>
     </div>
   </Link>
 </Col>
