@@ -1,4 +1,4 @@
-import {SensorMeasurement, Sensor, JsonSensorDumpRig, JsonSensorDumpPi} from '../shared';
+import { SensorMeasurement, Sensor, JsonSensorDumpRig, JsonSensorDumpPi } from '../shared';
 
 export default class SensorData {
   public static readonly ENVIRONMENTS: Array<{ title: string; identifier: 'air' | 'water' }> = [
@@ -7,7 +7,7 @@ export default class SensorData {
   ];
   sensors: Sensor[];
 
-  constructor(debug: boolean = false) {
+  constructor(debug = false) {
     this.sensors = debug ? SensorData.DEBUG_DATA : [];
   }
 
@@ -18,13 +18,13 @@ export default class SensorData {
   update(json: JsonSensorDumpPi | JsonSensorDumpRig, type: 'pi' | 'rig'): SensorData {
     if (type === 'pi') {
       this.sensors = [
-        ...this.sensors.filter(sensor => !['intakecoolant', 'intakeheatant', 'tent'].includes(sensor.identifier)),
-        ...SensorData.deserializePiData(json as JsonSensorDumpPi)
+        ...this.sensors.filter((sensor) => !['intakecoolant', 'intakeheatant', 'tent'].includes(sensor.identifier)),
+        ...SensorData.deserializePiData(json as JsonSensorDumpPi),
       ];
     } else if (type === 'rig') {
       this.sensors = [
-        ...this.sensors.filter(sensor => !['water', 'do', 'ph', 'tds'].includes(sensor.identifier)),
-        ...SensorData.deserializeRigData(json as JsonSensorDumpRig)
+        ...this.sensors.filter((sensor) => !['water', 'do', 'ph', 'tds'].includes(sensor.identifier)),
+        ...SensorData.deserializeRigData(json as JsonSensorDumpRig),
       ];
     }
 
@@ -165,7 +165,7 @@ export default class SensorData {
     ...SensorData.deserializePiData(
       JSON.parse(
         '{"air":{"intake_coolant":{"temperature":"14.9","humidity":"50.4"},"intake_heatant":{"temperature":"0.0","humidity":"0.0"},"tent":{"temperature":"20.6","humidity":"34.5"}}}',
-      )
-    )
+      ),
+    ),
   ];
 }

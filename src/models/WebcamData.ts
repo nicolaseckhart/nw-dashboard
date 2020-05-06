@@ -1,4 +1,4 @@
-import { JsonWebcamDump, Webcam, WebcamIdentifier} from '../shared';
+import { JsonWebcamDump, Webcam, WebcamIdentifier } from '../shared';
 
 export default class WebcamData {
   webcams: Webcam[];
@@ -9,9 +9,9 @@ export default class WebcamData {
 
   update(json: JsonWebcamDump): WebcamData {
     this.webcams = [
-      ...this.webcams.filter(webcam => Object.keys(json)[0] !== webcam.identifier),
-      WebcamData.deserialize(json)
-    ].sort((a: Webcam, b: Webcam) => (a.identifier > b.identifier) ? 1 : ((b.identifier > a.identifier) ? -1 : 0));
+      ...this.webcams.filter((webcam) => Object.keys(json)[0] !== webcam.identifier),
+      WebcamData.deserialize(json),
+    ].sort((a: Webcam, b: Webcam) => (a.identifier > b.identifier ? 1 : b.identifier > a.identifier ? -1 : 0));
 
     return this;
   }

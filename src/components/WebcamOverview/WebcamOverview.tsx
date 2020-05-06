@@ -1,6 +1,5 @@
 import { Col, Row } from 'react-bootstrap';
 import * as React from 'react';
-import { Loading } from '../Loading/Loading';
 import WebcamData from '../../models/WebcamData';
 import { Webcam } from '../../shared';
 

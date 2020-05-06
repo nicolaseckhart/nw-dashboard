@@ -5,13 +5,7 @@ import SensorData from './models/SensorData';
 import WebcamData from './models/WebcamData';
 import MiningData from './models/MiningData';
 import WSUpdateData from './models/WSUpdateData';
-import {
-  JsonMiningDump,
-  JsonSensorDumpPi,
-  JsonSensorDumpRig,
-  JsonWebcamDump,
-  JsonWSUpdateDump
-} from './shared';
+import { JsonMiningDump, JsonSensorDumpPi, JsonSensorDumpRig, JsonWebcamDump, JsonWSUpdateDump } from './shared';
 import { BrowserRouter as Router, Switch, Route, Link } from 'react-router-dom';
 import { Dashboard } from './components/Dashboard/Dashboard';
 import { SensorHistory } from './components/SensorHistory/SensorHistory';
