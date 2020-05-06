@@ -13,7 +13,6 @@ import { WebcamOverview } from './components/WebcamOverview/WebcamOverview';
 import { NotFound } from './components/NotFound/NotFound';
 import { MiningOverview } from './components/MiningOverview/MiningOverview';
 import WeatherSummary from './components/WeatherSummary/WeatherSummary';
-import SocketDownMessage from './components/SocketDownMessage/SocketDownMessage';
 import { PlantOverview } from './components/PlantOverview/PlantOverview';
 
 interface State {
@@ -175,7 +174,6 @@ export class App extends React.Component<{}, State> {
         </Navbar>
 
         <Container>
-          {this.socket.disconnected && <SocketDownMessage />}
           <Switch>
             <Route exact path="/">
               <Dashboard sensorData={this.state.sensorData} />

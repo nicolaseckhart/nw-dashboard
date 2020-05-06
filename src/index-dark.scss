@@ -103,6 +103,7 @@ a {
 .dropdown-menu {
   background-color: $dark;
   border: .04rem solid $whitesmoke;
+  border-radius: 0;
 }
 
 .dropdown-header {
@@ -263,55 +264,12 @@ a {
   }
 }
 
-%overlay-element {
-  height: 5rem;
-  position: absolute;
-  background-color: $dark2;
-  bottom: 3rem;
-  z-index: 10;
-  border: .15rem dashed $dark;
-  animation: float 2s infinite;
-}
-
-.socket-down-message {
-  @extend %overlay-element, %v-middle;
-  @include float;
-
-  opacity: 0;
-  width: auto;
-  right: 10rem;
-  padding: 0 1rem;
-  transition: opacity 200ms;
-}
-
-.socket-down-text {
-  color: $darkgray;
-  font-size: 2rem;
-  margin: 0 auto;
-}
-
-.socket-down-indicator {
-  @extend %overlay-element, %v-middle;
-  @include float;
-
-  width: 5rem;
-  right: 3rem;
-  border-radius: 50%;
-
-  &:hover {
-    & + .socket-down-message {
-      opacity: 1;
-    }
-  }
-}
-
 .service-online:before {
   display: inline-block;
   content: '';
   height: 0.75rem;
   width: 0.75rem;
   margin-right: 1em;
-  -webkit-border-radius: 1em;
   border-radius: 1em;
   background-color: $green;
 }
@@ -322,7 +280,6 @@ a {
   height: 0.75rem;
   width: 0.75rem;
   margin-right: 1em;
-  -webkit-border-radius: 1em;
   border-radius: 1em;
   background-color: $red;
 }
@@ -333,7 +290,6 @@ a {
   height: 0.75rem;
   width: 0.75rem;
   margin-right: 1em;
-  -webkit-border-radius: 1em;
   border-radius: 1em;
   background-color: $orange;
 }

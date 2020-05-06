@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { Col, Row } from 'react-bootstrap';
+import { Col } from 'react-bootstrap';
 
 export const PlantController: React.FC = () => {
   return (
