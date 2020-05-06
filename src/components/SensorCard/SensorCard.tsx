@@ -16,7 +16,7 @@ export const SensorCard: React.FC<Props> = ({ sensor }: Props) => {
         <span className={`jam jam-${measurement.icon}`} />
       </Col>
       {measurement.name && <Col xs={{ span: 7 }}>{measurement.name}</Col>}
-      <Col xs={{ span: 2 }} className="text-right">
+      <Col xs={{ span: 2 }} className="text-right text-nowrap">
         {measurement.value}
       </Col>
       <Col xs={{ span: 1 }} className="pl-0">

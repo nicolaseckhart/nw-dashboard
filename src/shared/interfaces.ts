@@ -81,7 +81,7 @@ export interface WSUpdate {
   clients: string[];
 }
 
-export interface JsonSensorDump {
+export interface JsonSensorDumpPi {
   air: {
     intake_coolant: {
       temperature: string;
@@ -96,6 +96,9 @@ export interface JsonSensorDump {
       humidity: string;
     };
   };
+}
+
+export interface JsonSensorDumpRig {
   water: {
     temperature: number;
     level: string;

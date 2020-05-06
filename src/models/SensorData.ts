@@ -1,4 +1,4 @@
-import { SensorMeasurement, Sensor, JsonSensorDump } from '../shared';
+import {SensorMeasurement, Sensor, JsonSensorDumpRig, JsonSensorDumpPi} from '../shared';
 
 export default class SensorData {
   public static readonly ENVIRONMENTS: Array<{ title: string; identifier: 'air' | 'water' }> = [
@@ -7,15 +7,31 @@ export default class SensorData {
   ];
   sensors: Sensor[];
 
-  constructor(json?: JsonSensorDump) {
-    this.sensors = json ? SensorData.deserialize(json) : SensorData.DEBUG_DATA;
+  constructor(debug: boolean = false) {
+    this.sensors = debug ? SensorData.DEBUG_DATA : [];
   }
 
   environmentSensors(environment: 'air' | 'water'): Sensor[] {
     return this.sensors.filter((sensor: Sensor) => sensor.environment === environment);
   }
 
-  static deserialize(json: JsonSensorDump): Sensor[] {
+  update(json: JsonSensorDumpPi | JsonSensorDumpRig, type: 'pi' | 'rig'): SensorData {
+    if (type === 'pi') {
+      this.sensors = [
+        ...this.sensors.filter(sensor => !['intakecoolant', 'intakeheatant', 'tent'].includes(sensor.identifier)),
+        ...SensorData.deserializePiData(json as JsonSensorDumpPi)
+      ];
+    } else if (type === 'rig') {
+      this.sensors = [
+        ...this.sensors.filter(sensor => !['water', 'do', 'ph', 'tds'].includes(sensor.identifier)),
+        ...SensorData.deserializeRigData(json as JsonSensorDumpRig)
+      ];
+    }
+
+    return this;
+  }
+
+  static deserializePiData(json: JsonSensorDumpPi): Sensor[] {
     return [
       {
         name: 'Intake Coolant',
@@ -77,6 +93,11 @@ export default class SensorData {
           } as SensorMeasurement,
         ],
       } as Sensor,
+    ];
+  }
+
+  static deserializeRigData(json: JsonSensorDumpRig): Sensor[] {
+    return [
       {
         name: 'Water',
         environment: 'water',
@@ -135,9 +156,16 @@ export default class SensorData {
     ];
   }
 
-  private static readonly DEBUG_DATA: Sensor[] = SensorData.deserialize(
-    JSON.parse(
-      '{"air":{"intake_coolant":{"temperature":"14.9","humidity":"50.4"},"intake_heatant":{"temperature":"0.0","humidity":"0.0"},"tent":{"temperature":"20.6","humidity":"34.5"}},"water":{"temperature":-127,"level":"Low","DO":{"value":6.51,"units":"mg/L"},"PH":{"voltage":0,"value":0.12,"units":""},"TDS":{"voltage":1.9,"value":813,"units":"ppm"}}}',
+  private static readonly DEBUG_DATA: Sensor[] = [
+    ...SensorData.deserializeRigData(
+      JSON.parse(
+        '{"water":{"temperature":-127,"level":"Low","DO":{"value":6.51,"units":"mg/L"},"PH":{"voltage":0,"value":0.12,"units":""},"TDS":{"voltage":1.9,"value":813,"units":"ppm"}}}',
+      ),
     ),
-  );
+    ...SensorData.deserializePiData(
+      JSON.parse(
+        '{"air":{"intake_coolant":{"temperature":"14.9","humidity":"50.4"},"intake_heatant":{"temperature":"0.0","humidity":"0.0"},"tent":{"temperature":"20.6","humidity":"34.5"}}}',
+      )
+    )
+  ];
 }

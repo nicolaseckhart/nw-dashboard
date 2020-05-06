@@ -5,7 +5,13 @@ import SensorData from './models/SensorData';
 import WebcamData from './models/WebcamData';
 import MiningData from './models/MiningData';
 import WSUpdateData from './models/WSUpdateData';
-import { JsonMiningDump, JsonSensorDump, JsonWebcamDump, JsonWSUpdateDump } from './shared';
+import {
+  JsonMiningDump,
+  JsonSensorDumpPi,
+  JsonSensorDumpRig,
+  JsonWebcamDump,
+  JsonWSUpdateDump
+} from './shared';
 import { BrowserRouter as Router, Switch, Route, Link } from 'react-router-dom';
 import { Dashboard } from './components/Dashboard/Dashboard';
 import { SensorHistory } from './components/SensorHistory/SensorHistory';
@@ -16,7 +22,7 @@ import WeatherSummary from './components/WeatherSummary/WeatherSummary';
 import { PlantOverview } from './components/PlantOverview/PlantOverview';
 
 interface State {
-  sensorData: SensorData | null;
+  sensorData: SensorData;
   webcamData: WebcamData | null;
   miningData: MiningData | null;
   serviceStates: WSUpdateData;
@@ -30,7 +36,7 @@ export class App extends React.Component<{}, State> {
   constructor(props: {}) {
     super(props);
     this.state = {
-      sensorData: null,
+      sensorData: new SensorData(),
       webcamData: null,
       miningData: null,
       isServiceListOpen: false,
@@ -63,15 +69,22 @@ export class App extends React.Component<{}, State> {
       this.socket.on('authenticated', () => {
         this.socket.emit('get-user-list');
 
-        this.socket.on('nwmon', (data: JsonSensorDump) => {
-          this.setState({ sensorData: new SensorData(data) });
+        this.socket.on('nwmon_pi', (data: JsonSensorDumpPi) => {
+          this.setState({ sensorData: this.state.sensorData.update(data, 'pi') });
         });
+
+        this.socket.on('nwmon_rig', (data: JsonSensorDumpRig) => {
+          this.setState({ sensorData: this.state.sensorData.update(data, 'rig') });
+        });
+
         this.socket.on('nwcam', (data: JsonWebcamDump) => {
           this.setState({ webcamData: new WebcamData(data) });
         });
+
         this.socket.on('mining-stats', (data: JsonMiningDump) => {
           this.setState({ miningData: new MiningData(data) });
         });
+
         this.socket.on('ws-update', (data: JsonWSUpdateDump) => {
           const wsUpdate = new WSUpdateData(data);
           this.setState({
