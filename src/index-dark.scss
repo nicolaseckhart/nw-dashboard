@@ -15,6 +15,7 @@ $lightblue: #1e90ff;
 $loading-bg: #f5f4e0;
 $dark: #343a40;
 $dark2: #1b1f25;
+$orange: #ff5400;
 
 // Mix-ins & shared snippets
 
@@ -94,6 +95,32 @@ a {
     color: $lightgreen !important;
   }
 }
+
+.dropdown-toggle:after {
+  content: none
+}
+
+.dropdown-menu {
+  background-color: $dark;
+  border: .04rem solid $whitesmoke;
+}
+
+.dropdown-header {
+  font-weight: bold;
+  color: $whitesmoke;
+}
+
+.dropdown-item {
+  font-size: small;
+  color: $whitesmoke;
+}
+
+.dropdown-item:hover {
+  background-color: transparent;
+  color: $whitesmoke;
+  text-decoration: none;
+}
+
 
 .display-1, .display-4 {
   @extend %letter-spaced;
@@ -276,4 +303,37 @@ a {
       opacity: 1;
     }
   }
+}
+
+.service-online:before {
+  display: inline-block;
+  content: '';
+  height: 0.75rem;
+  width: 0.75rem;
+  margin-right: 1em;
+  -webkit-border-radius: 1em;
+  border-radius: 1em;
+  background-color: $green;
+}
+
+.service-offline:before {
+  display: inline-block;
+  content: '';
+  height: 0.75rem;
+  width: 0.75rem;
+  margin-right: 1em;
+  -webkit-border-radius: 1em;
+  border-radius: 1em;
+  background-color: $red;
+}
+
+.service-problem:before {
+  display: inline-block;
+  content: '';
+  height: 0.75rem;
+  width: 0.75rem;
+  margin-right: 1em;
+  -webkit-border-radius: 1em;
+  border-radius: 1em;
+  background-color: $orange;
 }

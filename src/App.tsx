@@ -1,10 +1,11 @@
 import * as React from 'react';
 import io from 'socket.io-client';
-import { Container, Nav, Navbar } from 'react-bootstrap';
+import { Container, Nav, Navbar, NavDropdown } from 'react-bootstrap';
 import SensorData from './models/SensorData';
 import WebcamData from './models/WebcamData';
 import MiningData from './models/MiningData';
-import { JsonMiningDump, JsonSensorDump, JsonWebcamDump } from './shared';
+import WSUpdateData from './models/WSUpdateData';
+import { JsonMiningDump, JsonSensorDump, JsonWebcamDump, JsonWSUpdateDump } from './shared';
 import { BrowserRouter as Router, Switch, Route, Link } from 'react-router-dom';
 import { Dashboard } from './components/Dashboard/Dashboard';
 import { SensorHistory } from './components/SensorHistory/SensorHistory';
@@ -13,21 +14,30 @@ import { NotFound } from './components/NotFound/NotFound';
 import { MiningOverview } from './components/MiningOverview/MiningOverview';
 import WeatherSummary from './components/WeatherSummary/WeatherSummary';
 import SocketDownMessage from './components/SocketDownMessage/SocketDownMessage';
+import { PlantOverview } from './components/PlantOverview/PlantOverview';
 
 interface State {
   sensorData: SensorData | null;
   webcamData: WebcamData | null;
   miningData: MiningData | null;
+  serviceStates: WSUpdateData;
+  isServiceListOpen: boolean;
+  allServicesOnline: boolean;
 }
 
 export class App extends React.Component<{}, State> {
   socket: SocketIOClient.Socket;
-  disconnected = true;
-  socketDisconnected = false;
 
   constructor(props: {}) {
     super(props);
-    this.state = { sensorData: null, webcamData: null, miningData: null };
+    this.state = {
+      sensorData: null,
+      webcamData: null,
+      miningData: null,
+      isServiceListOpen: false,
+      serviceStates: new WSUpdateData(),
+      allServicesOnline: false,
+    };
     this.socket = this.createSocket();
   }
 
@@ -36,7 +46,6 @@ export class App extends React.Component<{}, State> {
     if (process.env.REACT_APP_DEBUG) {
       this.setState({ sensorData: new SensorData(), webcamData: new WebcamData() });
     }
-
     this.connectToSocket();
   }
 
@@ -53,27 +62,37 @@ export class App extends React.Component<{}, State> {
         password: process.env.REACT_APP_SOCKET_PASSWORD,
       });
       this.socket.on('authenticated', () => {
+        this.socket.emit('get-user-list');
+
         this.socket.on('nwmon', (data: JsonSensorDump) => {
           this.setState({ sensorData: new SensorData(data) });
-          this.disconnected = false;
-          this.socketDisconnected = false;
         });
         this.socket.on('nwcam', (data: JsonWebcamDump) => {
           this.setState({ webcamData: new WebcamData(data) });
-          this.disconnected = false;
-          this.socketDisconnected = false;
         });
         this.socket.on('mining-stats', (data: JsonMiningDump) => {
           this.setState({ miningData: new MiningData(data) });
         });
+        this.socket.on('ws-update', (data: JsonWSUpdateDump) => {
+          const wsUpdate = new WSUpdateData(data);
+          this.setState({
+            serviceStates: wsUpdate,
+            allServicesOnline:
+              wsUpdate.update.clients.includes('nwmon_pi') &&
+              wsUpdate.update.clients.includes('nwmon_rig') &&
+              wsUpdate.update.clients.includes('nwcam'),
+          });
+        });
       });
     });
+  };
 
-    setTimeout(() => {
-      if (this.disconnected) {
-        this.socketDisconnected = true;
-      }
-    }, 4000);
+  handleServiceListOpen = () => {
+    this.setState({ isServiceListOpen: true });
+  };
+
+  handleServiceListClose = () => {
+    this.setState({ isServiceListOpen: false });
   };
 
   render = () => (
@@ -89,10 +108,10 @@ export class App extends React.Component<{}, State> {
           <Navbar.Toggle aria-controls="navigation" />
           <Navbar.Collapse id="navigation">
             <Nav className="mr-auto">
-              <Link to="/mining">
+              <Link to="/plant">
                 <Nav.Item className="mr-5">
-                  Mining
-                  <span className="jam jam-coin ml-2" />
+                  Plant
+                  <span className="jam jam-branch ml-2" />
                 </Nav.Item>
               </Link>
               <Link to="/history/intakecoolant/day">
@@ -107,16 +126,63 @@ export class App extends React.Component<{}, State> {
                   <span className="jam jam-camera-alt ml-2" />
                 </Nav.Item>
               </Link>
+              <Link to="/mining">
+                <Nav.Item className="mr-5">
+                  Mining
+                  <span className="jam jam-coin ml-2" />
+                </Nav.Item>
+              </Link>
             </Nav>
           </Navbar.Collapse>
+          <NavDropdown
+            alignRight
+            title={
+              this.socket.connected ? (
+                <span className={this.state.allServicesOnline ? 'service-online' : 'service-problem'}>Online</span>
+              ) : (
+                <span className={'service-offline'}>Offline</span>
+              )
+            }
+            id="status-nav-dropdown"
+            onMouseEnter={this.handleServiceListOpen}
+            onMouseLeave={this.handleServiceListClose}
+            show={this.state.isServiceListOpen}
+          >
+            <NavDropdown.Header>Services</NavDropdown.Header>
+            <NavDropdown.Divider />
+            <NavDropdown.Item
+              className={
+                this.state.serviceStates.update.clients.includes('nwmon_pi') ? 'service-online' : 'service-offline'
+              }
+            >
+              nwmon(pi)
+            </NavDropdown.Item>
+            <NavDropdown.Item
+              className={
+                this.state.serviceStates.update.clients.includes('nwmon_rig') ? 'service-online' : 'service-offline'
+              }
+            >
+              nwmon(rig)
+            </NavDropdown.Item>
+            <NavDropdown.Item
+              className={
+                this.state.serviceStates.update.clients.includes('nwcam') ? 'service-online' : 'service-offline'
+              }
+            >
+              nwcam
+            </NavDropdown.Item>
+          </NavDropdown>
         </Navbar>
 
         <Container>
-          {this.socketDisconnected && <SocketDownMessage />}
+          {this.socket.disconnected && <SocketDownMessage />}
           <Switch>
             <Route exact path="/">
               <Dashboard sensorData={this.state.sensorData} />
               <WeatherSummary />
+            </Route>
+            <Route exact path="/plant">
+              <PlantOverview />
             </Route>
             <Route exact path="/mining">
               <MiningOverview miningData={this.state.miningData} />

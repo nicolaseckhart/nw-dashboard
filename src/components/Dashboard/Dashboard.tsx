@@ -13,7 +13,7 @@ export const Dashboard: React.FC<Props> = ({ sensorData }: Props) => (
   <div className="mt-5">
     {sensorData !== null && (
       <>
-        {SensorData.ENVIRONMENTS.map(environment => (
+        {SensorData.ENVIRONMENTS.map((environment) => (
           <div key={environment.identifier}>
             <h1 className="display-4">{environment.title}</h1>
             <Row>
