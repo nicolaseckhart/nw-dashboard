@@ -5,7 +5,7 @@ import WebcamData from '../../models/WebcamData';
 import { Webcam } from '../../shared';
 
 interface Props {
-  webcamData: WebcamData | null;
+  webcamData: WebcamData;
 }
 
 export const WebcamOverview: React.FC<Props> = ({ webcamData }: Props) => {
@@ -18,17 +18,14 @@ export const WebcamOverview: React.FC<Props> = ({ webcamData }: Props) => {
 
   return (
     <div className="mt-5">
-      {webcamData !== null && (
-        <Row>
-          {webcamData.webcams.map((webcam: Webcam, index: number) => (
-            <Col md={{ span: 6 }} key={webcam.identifier}>
-              {renderWebcamFeed(webcam.image)}
-              <h1 className="display-4 mt-5">Webcam {index + 1}</h1>
-            </Col>
-          ))}
-        </Row>
-      )}
-      {(webcamData === null || webcamData.webcams.length === 0) && <Loading />}
+      <Row>
+        {webcamData.webcams.map((webcam: Webcam, index: number) => (
+          <Col md={{ span: 6 }} key={webcam.identifier}>
+            {renderWebcamFeed(webcam.image)}
+            <h1 className="display-4 mt-5">Webcam {index + 1}</h1>
+          </Col>
+        ))}
+      </Row>
     </div>
   );
 };

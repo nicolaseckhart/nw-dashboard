@@ -23,7 +23,7 @@ import { PlantOverview } from './components/PlantOverview/PlantOverview';
 
 interface State {
   sensorData: SensorData;
-  webcamData: WebcamData | null;
+  webcamData: WebcamData;
   miningData: MiningData | null;
   serviceStates: WSUpdateData;
   isServiceListOpen: boolean;
@@ -37,7 +37,7 @@ export class App extends React.Component<{}, State> {
     super(props);
     this.state = {
       sensorData: new SensorData(),
-      webcamData: null,
+      webcamData: new WebcamData(),
       miningData: null,
       isServiceListOpen: false,
       serviceStates: new WSUpdateData(),
@@ -48,8 +48,8 @@ export class App extends React.Component<{}, State> {
 
   componentDidMount() {
     // Load debug data if in debug mode. Use this for development if the socket is down.
-    if (process.env.REACT_APP_DEBUG) {
-      this.setState({ sensorData: new SensorData(), webcamData: new WebcamData() });
+    if (process.env.REACT_APP_DEBUG === 'true') {
+      this.setState({ sensorData: new SensorData(true) });
     }
     this.connectToSocket();
   }
@@ -78,7 +78,7 @@ export class App extends React.Component<{}, State> {
         });
 
         this.socket.on('nwcam', (data: JsonWebcamDump) => {
-          this.setState({ webcamData: new WebcamData(data) });
+          this.setState({ webcamData: this.state.webcamData.update(data) });
         });
 
         this.socket.on('mining-stats', (data: JsonMiningDump) => {

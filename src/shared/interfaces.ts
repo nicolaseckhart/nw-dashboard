@@ -120,8 +120,8 @@ export interface JsonSensorDumpRig {
 }
 
 export interface JsonWebcamDump {
-  cam0: string;
-  cam1: string;
+  cam0?: string;
+  cam1?: string;
 }
 
 export interface JsonMiningDump {

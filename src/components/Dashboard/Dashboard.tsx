@@ -6,12 +6,12 @@ import SensorData from '../../models/SensorData';
 import { Loading } from '../Loading/Loading';
 
 interface Props {
-  sensorData: SensorData | null;
+  sensorData: SensorData;
 }
 
 export const Dashboard: React.FC<Props> = ({ sensorData }: Props) => (
   <div className="mt-5">
-    {sensorData !== null && (
+    {sensorData.sensors.length >= 0 && (
       <>
         {SensorData.ENVIRONMENTS.map((environment) => (
           <div key={environment.identifier}>
@@ -25,6 +25,6 @@ export const Dashboard: React.FC<Props> = ({ sensorData }: Props) => (
         ))}
       </>
     )}
-    {(sensorData === null || sensorData.sensors.length === 0) && <Loading />}
+    {sensorData.sensors.length === 0 && <Loading />}
   </div>
 );
