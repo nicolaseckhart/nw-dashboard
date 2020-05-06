@@ -13,7 +13,7 @@ const weeks = [
   'Mid Bloom',
   'Late Bloom',
   'Ripen',
-  'Flush'
+  'Flush',
 ];
 
 export default class GrowthProgram {
@@ -24,5 +24,5 @@ export default class GrowthProgram {
     const transformedWeekDifference = transformDifference(moment().diff(plantDate, 'weeks'));
     if (transformedWeekDifference >= weeks.length) return 'Finished';
     return weeks[transformedWeekDifference];
-  }
+  };
 }
