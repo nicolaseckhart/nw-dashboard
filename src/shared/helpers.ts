@@ -4,6 +4,12 @@ export const apiRequestOptions = {
   }),
 };
 
+/**
+ * Reduces a measurement series to a limited amount of points by splitting the series into intervals and averaging them.
+ * @param series
+ * @param maxPoints
+ * @param key
+ */
 export function reduceSeries(series: any[], maxPoints: number, key: string) {
   const intervalLength = Math.ceil(series.length / maxPoints);
   const remainingSeries = series.filter((point, index) => index % intervalLength === 0);

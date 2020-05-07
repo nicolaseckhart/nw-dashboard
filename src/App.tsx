@@ -12,15 +12,18 @@ import { SensorHistory } from './components/SensorHistory/SensorHistory';
 import { WebcamOverview } from './components/WebcamOverview/WebcamOverview';
 import { NotFound } from './components/NotFound/NotFound';
 import { MiningOverview } from './components/MiningOverview/MiningOverview';
+import { EventOverview } from './components/EventOverview/EventOverview';
 import WeatherSummary from './components/WeatherSummary/WeatherSummary';
 import { PlantComponent } from './components/PlantComponent/PlantComponent';
 import VentData from './models/VentData';
+import EventLogData from './models/EventLogData';
 
 interface State {
   sensorData: SensorData;
   webcamData: WebcamData;
   ventData: VentData;
   miningData: MiningData | null;
+  eventLogData: EventLogData | null;
   serviceStates: WSUpdateData;
   isServiceListOpen: boolean;
   allServicesOnline: boolean;
@@ -36,6 +39,7 @@ export class App extends React.Component<{}, State> {
       webcamData: new WebcamData(),
       ventData: new VentData(),
       miningData: null,
+      eventLogData: new EventLogData(),
       isServiceListOpen: false,
       serviceStates: new WSUpdateData(),
       allServicesOnline: false,
@@ -146,52 +150,58 @@ export class App extends React.Component<{}, State> {
                 </Nav.Item>
               </Link>
             </Nav>
+            <NavDropdown
+              alignRight
+              title={
+                this.socket.connected ? (
+                  <span className={this.state.allServicesOnline ? 'service-online' : 'service-problem'}>Online</span>
+                ) : (
+                  <span className={'service-offline'}>Offline</span>
+                )
+              }
+              id="status-nav-dropdown"
+              onMouseEnter={this.handleServiceListOpen}
+              onMouseLeave={this.handleServiceListClose}
+              show={this.state.isServiceListOpen}
+            >
+              <NavDropdown.Header>Services</NavDropdown.Header>
+              <NavDropdown.Divider />
+              <NavDropdown.Item
+                className={
+                  this.state.serviceStates.update.clients.includes('nwmon_pi') ? 'service-online' : 'service-offline'
+                }
+              >
+                nwmon (pi)
+              </NavDropdown.Item>
+              <NavDropdown.Item
+                className={
+                  this.state.serviceStates.update.clients.includes('nwmon_rig') ? 'service-online' : 'service-offline'
+                }
+              >
+                nwmon (rig)
+              </NavDropdown.Item>
+              <NavDropdown.Item
+                className={
+                  this.state.serviceStates.update.clients.includes('nwcam') ? 'service-online' : 'service-offline'
+                }
+              >
+                nwcam
+              </NavDropdown.Item>
+              <NavDropdown.Item
+                className={
+                  this.state.serviceStates.update.clients.includes('rig1') ? 'service-online' : 'service-offline'
+                }
+              >
+                mining (rig)
+              </NavDropdown.Item>
+            </NavDropdown>
+
+            <Link to="/events">
+              <Nav.Item className="mr-5">
+                <span className="jam jam-task-list ml-2" />
+              </Nav.Item>
+            </Link>
           </Navbar.Collapse>
-          <NavDropdown
-            alignRight
-            title={
-              this.socket.connected ? (
-                <span className={this.state.allServicesOnline ? 'service-online' : 'service-problem'}>Online</span>
-              ) : (
-                <span className={'service-offline'}>Offline</span>
-              )
-            }
-            id="status-nav-dropdown"
-            onMouseEnter={this.handleServiceListOpen}
-            onMouseLeave={this.handleServiceListClose}
-            show={this.state.isServiceListOpen}
-          >
-            <NavDropdown.Header>Services</NavDropdown.Header>
-            <NavDropdown.Divider />
-            <NavDropdown.Item
-              className={
-                this.state.serviceStates.update.clients.includes('nwmon_pi') ? 'service-online' : 'service-offline'
-              }
-            >
-              nwmon (pi)
-            </NavDropdown.Item>
-            <NavDropdown.Item
-              className={
-                this.state.serviceStates.update.clients.includes('nwmon_rig') ? 'service-online' : 'service-offline'
-              }
-            >
-              nwmon (rig)
-            </NavDropdown.Item>
-            <NavDropdown.Item
-              className={
-                this.state.serviceStates.update.clients.includes('nwcam') ? 'service-online' : 'service-offline'
-              }
-            >
-              nwcam
-            </NavDropdown.Item>
-            <NavDropdown.Item
-              className={
-                this.state.serviceStates.update.clients.includes('rig1') ? 'service-online' : 'service-offline'
-              }
-            >
-              mining (rig)
-            </NavDropdown.Item>
-          </NavDropdown>
         </Navbar>
 
         <Container>
@@ -209,6 +219,9 @@ export class App extends React.Component<{}, State> {
             <Route exact path="/history/:sensor/:scope" component={SensorHistory} />
             <Route exact path="/webcams">
               <WebcamOverview webcamData={this.state.webcamData} />
+            </Route>
+            <Route exact path="/events">
+              <EventOverview eventLogData={this.state.eventLogData} />
             </Route>
             <Route path="*" component={NotFound} />
           </Switch>
