@@ -92,7 +92,8 @@ export class App extends React.Component<{}, State> {
             allServicesOnline:
               wsUpdate.update.clients.includes('nwmon_pi') &&
               wsUpdate.update.clients.includes('nwmon_rig') &&
-              wsUpdate.update.clients.includes('nwcam'),
+              wsUpdate.update.clients.includes('nwcam') &&
+              wsUpdate.update.clients.includes('rig1'),
           });
         });
       });
@@ -167,14 +168,14 @@ export class App extends React.Component<{}, State> {
                 this.state.serviceStates.update.clients.includes('nwmon_pi') ? 'service-online' : 'service-offline'
               }
             >
-              nwmon(pi)
+              nwmon (pi)
             </NavDropdown.Item>
             <NavDropdown.Item
               className={
                 this.state.serviceStates.update.clients.includes('nwmon_rig') ? 'service-online' : 'service-offline'
               }
             >
-              nwmon(rig)
+              nwmon (rig)
             </NavDropdown.Item>
             <NavDropdown.Item
               className={
@@ -182,6 +183,13 @@ export class App extends React.Component<{}, State> {
               }
             >
               nwcam
+            </NavDropdown.Item>
+            <NavDropdown.Item
+              className={
+                this.state.serviceStates.update.clients.includes('rig1') ? 'service-online' : 'service-offline'
+              }
+            >
+              mining (rig)
             </NavDropdown.Item>
           </NavDropdown>
         </Navbar>
