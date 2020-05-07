@@ -13,7 +13,7 @@ import { WebcamOverview } from './components/WebcamOverview/WebcamOverview';
 import { NotFound } from './components/NotFound/NotFound';
 import { MiningOverview } from './components/MiningOverview/MiningOverview';
 import WeatherSummary from './components/WeatherSummary/WeatherSummary';
-import { PlantOverview } from './components/PlantOverview/PlantOverview';
+import { PlantComponent } from './components/PlantComponent/PlantComponent';
 
 interface State {
   sensorData: SensorData;
@@ -187,7 +187,7 @@ export class App extends React.Component<{}, State> {
               <WeatherSummary />
             </Route>
             <Route exact path="/plant">
-              <PlantOverview />
+              <PlantComponent />
             </Route>
             <Route exact path="/mining">
               <MiningOverview miningData={this.state.miningData} />

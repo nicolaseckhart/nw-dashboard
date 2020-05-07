@@ -16,6 +16,6 @@ export default class PlantState {
   }
 
   getPlantDate() {
-    return this.plantDate.format("dddd, MMMM Do YYYY");
+    return this.plantDate.format('dddd, MMMM Do YYYY');
   }
 }

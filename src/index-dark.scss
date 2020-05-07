@@ -297,6 +297,24 @@ a {
   background-color: $orange;
 }
 
+.nw-button {
+  margin: -10rem auto 2rem;
+  width: 4rem;
+  height: 4rem;
+  color: $whitesmoke;
+  border-radius: 50%;
+  background-color: $dark2;
+  border: .15rem dashed $dark;
+  text-align: center;
+  font-size: 2.6rem;
+  transition: color ease .2s;
+  cursor: pointer;
+
+  &:hover {
+    color: $green;
+  }
+}
+
 // Plant SVG Style
 
 .plant-svg {
