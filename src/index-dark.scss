@@ -122,7 +122,6 @@ a {
   text-decoration: none;
 }
 
-
 .display-1, .display-4 {
   @extend %letter-spaced;
 
@@ -148,6 +147,10 @@ a {
 }
 
 // Application styles
+
+.text-light {
+  color: $whitesmoke;
+}
 
 .info-card {
   border: .15rem dashed $lightgray;
@@ -295,6 +298,11 @@ a {
 }
 
 // Plant SVG Style
+
+.plant-svg {
+  margin-top: -5rem;
+}
+
 .st2,
 .st3 {
   fill: none;
