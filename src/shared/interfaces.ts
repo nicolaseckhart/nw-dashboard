@@ -54,6 +54,11 @@ export interface SensorMeasurement {
   unit?: string;
 }
 
+export interface Vent {
+  name: string;
+  open: boolean;
+}
+
 export interface Webcam {
   identifier: WebcamIdentifier;
   image: string;
@@ -98,7 +103,14 @@ export interface JsonSensorDumpPi {
   };
 }
 
+export interface JsonVentDump {
+  heatant: string;
+  coolant: string;
+  bypass: string;
+}
+
 export interface JsonSensorDumpRig {
+  air: JsonVentDump;
   water: {
     temperature: number;
     level: string;

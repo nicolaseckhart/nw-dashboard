@@ -3,14 +3,19 @@ import PlantState from '../../models/PlantState';
 import GrowthProgram from '../../models/GrowthProgram';
 import { Row, Col, Button, Modal, Form } from 'react-bootstrap';
 import { PlantGraphic } from './PlantGraphic';
+import VentData from '../../models/VentData';
 
 interface State {
   plantState: PlantState;
   modalShown: boolean;
 }
 
-export class PlantComponent extends React.Component<{}, State> {
-  constructor(props: {}) {
+interface Props {
+  ventData: VentData;
+}
+
+export class PlantComponent extends React.Component<Props, State> {
+  constructor(props: Props) {
     super(props);
     this.state = {
       plantState: new PlantState(),
@@ -88,7 +93,7 @@ export class PlantComponent extends React.Component<{}, State> {
 
       {this.renderGrowthProgramInfo()}
 
-      <PlantGraphic plantState={this.state.plantState} />
+      <PlantGraphic plantState={this.state.plantState} ventData={this.props.ventData} />
 
       <div className="nw-button" onClick={this.handleShow}>
         <span className="jam jam-cog" />

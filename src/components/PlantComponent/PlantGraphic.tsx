@@ -1,11 +1,13 @@
 import * as React from 'react';
 import PlantState from '../../models/PlantState';
+import VentData from '../../models/VentData';
 
 interface Props {
   plantState: PlantState;
+  ventData: VentData;
 }
 
-export const PlantGraphic: React.FC<Props> = ({ plantState }: Props) => (
+export const PlantGraphic: React.FC<Props> = ({ plantState, ventData }: Props) => (
   <div className="plant-svg">
     <svg version="1.1" id="Layer_1" x="0px" y="0px" viewBox="0 0 1000 800">
       <rect x="415" y="105" width="450" height="330" className="tent" />
@@ -294,8 +296,12 @@ C712.49,343.55,713.98,350.15,714.05,350.43z"
         Heating Vent
       </text>
       <rect x="314.63" y="395.14" className="st15" width="53.76" height="21.5" />
-      <text transform="matrix(1 0 0 1 314.6338 403.7292)" className="st18 st19 plant-labels">
-        Open
+      <text
+        transform="matrix(1 0 0 1 314.6338 403.7292)"
+        className="st18 st19 plant-labels"
+        style={ventData.getLabelStyle('heatant')}
+      >
+        {ventData.findVentState('heatant')}
       </text>
       <rect x="469.84" y="533.06" className="st15" width="75.51" height="27.96" />
       <text transform="matrix(1 0 0 1 469.8442 541.5826)" className="duct-labels plant-labels">
@@ -306,12 +312,20 @@ C712.49,343.55,713.98,350.15,714.05,350.43z"
         Cooling Vent
       </text>
       <rect x="168.79" y="256.95" className="st15" width="53.76" height="21.5" />
-      <text transform="matrix(1 0 0 1 168.7923 265.5464)" className="st19 plant-labels" style={{ fill: 'red' }}>
-        Closed
+      <text
+        transform="matrix(1 0 0 1 168.7923 265.5464)"
+        className="st19 plant-labels"
+        style={ventData.getLabelStyle('coolant')}
+      >
+        {ventData.findVentState('coolant')}
       </text>
       <rect x="480.72" y="549.21" className="st15" width="53.76" height="21.5" />
-      <text transform="matrix(1 0 0 1 480.7206 557.803)" className="st18 st19 plant-labels">
-        Open
+      <text
+        transform="matrix(1 0 0 1 480.7206 557.803)"
+        className="st18 st19 plant-labels"
+        style={ventData.getLabelStyle('bypass')}
+      >
+        {ventData.findVentState('bypass')}
       </text>
       <rect x="488.42" y="233.6" className="st15" width="96.77" height="30.11" />
       <text transform="matrix(1 0 0 1 488.4166 242.1939)" className="st19 plant-labels">

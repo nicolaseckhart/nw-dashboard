@@ -14,10 +14,12 @@ import { NotFound } from './components/NotFound/NotFound';
 import { MiningOverview } from './components/MiningOverview/MiningOverview';
 import WeatherSummary from './components/WeatherSummary/WeatherSummary';
 import { PlantComponent } from './components/PlantComponent/PlantComponent';
+import VentData from './models/VentData';
 
 interface State {
   sensorData: SensorData;
   webcamData: WebcamData;
+  ventData: VentData;
   miningData: MiningData | null;
   serviceStates: WSUpdateData;
   isServiceListOpen: boolean;
@@ -32,6 +34,7 @@ export class App extends React.Component<{}, State> {
     this.state = {
       sensorData: new SensorData(),
       webcamData: new WebcamData(),
+      ventData: new VentData(),
       miningData: null,
       isServiceListOpen: false,
       serviceStates: new WSUpdateData(),
@@ -68,7 +71,10 @@ export class App extends React.Component<{}, State> {
         });
 
         this.socket.on('nwmon_rig', (data: JsonSensorDumpRig) => {
-          this.setState({ sensorData: this.state.sensorData.update(data, 'rig') });
+          this.setState({
+            sensorData: this.state.sensorData.update(data, 'rig'),
+            ventData: this.state.ventData.update(data.air),
+          });
         });
 
         this.socket.on('nwcam', (data: JsonWebcamDump) => {
@@ -187,7 +193,7 @@ export class App extends React.Component<{}, State> {
               <WeatherSummary />
             </Route>
             <Route exact path="/plant">
-              <PlantComponent />
+              <PlantComponent ventData={this.state.ventData} />
             </Route>
             <Route exact path="/mining">
               <MiningOverview miningData={this.state.miningData} />
