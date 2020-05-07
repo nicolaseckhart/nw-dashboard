@@ -5,7 +5,7 @@ export default class PlantState {
   plant2: string;
   plant3: string;
   plant4: string;
-  private plantDate: Moment;
+  plantDate: Moment;
 
   constructor() {
     this.plant1 = 'Plant 1 Name';
@@ -15,7 +15,7 @@ export default class PlantState {
     this.plantDate = moment('2019-11-25');
   }
 
-  getPlantDate() {
+  readablePlantDate() {
     return this.plantDate.format('dddd, MMMM Do YYYY');
   }
 }

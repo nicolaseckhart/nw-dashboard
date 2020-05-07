@@ -1,7 +1,6 @@
 import * as React from 'react';
 import PlantState from '../../models/PlantState';
 import GrowthProgram from '../../models/GrowthProgram';
-import moment from 'moment';
 import { Row, Col, Button, Modal, Form } from 'react-bootstrap';
 import { PlantGraphic } from './PlantGraphic';
 
@@ -28,21 +27,21 @@ export class PlantComponent extends React.Component<{}, State> {
         <p className="text-light">
           <b>Plant Date:</b>
           <br />
-          {this.state.plantState.getPlantDate()}
+          {this.state.plantState.readablePlantDate()}
         </p>
       </Col>
       <Col className="text-center">
         <p className="text-light">
           <b>Current Week:</b>
           <br />
-          {GrowthProgram.getWeek(moment().subtract(12, 'weeks'))}
+          {GrowthProgram.getWeek(this.state.plantState.plantDate)}
         </p>
       </Col>
       <Col className="text-center">
         <p className="text-light">
           <b>Upcoming Week:</b>
           <br />
-          {GrowthProgram.getUpcomingWeek(moment().subtract(12, 'weeks'))}
+          {GrowthProgram.getUpcomingWeek(this.state.plantState.plantDate)}
         </p>
       </Col>
     </Row>
@@ -74,7 +73,7 @@ export class PlantComponent extends React.Component<{}, State> {
 
           <Form.Group controlId="plantDate">
             <Form.Label>Plant Date</Form.Label>
-            <Form.Control placeholder="Plant Date" value={this.state.plantState.getPlantDate()} disabled />
+            <Form.Control placeholder="Plant Date" value={this.state.plantState.readablePlantDate()} disabled />
           </Form.Group>
         </Modal.Body>
         <Modal.Footer>
