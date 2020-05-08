@@ -1,0 +1,358 @@
+@import url('https://fonts.googleapis.com/css?family=Roboto:300,400,500,700&display=swap');
+
+// Variables
+
+$dark-primary: #121212;
+$accent-primary: #0B5D1E;
+
+$white: #fff;
+$whitesmoke: #D0CDC6;
+$lightgray: #d3d3d3;
+$black: #000;
+$red: #be0000;
+$blue: #0000be;
+$lightgreen: #32cd32;
+$green: #00be00;
+$lightblue: #1e90ff;
+$loading-bg: #f5f4e0;
+$orange: #ff5400;
+
+// Mix-ins & shared snippets
+
+@mixin pulse {
+  @keyframes pulse-animation {
+    0% {
+      box-shadow: 0 0 0 0 rgba($green, 0.8);
+    }
+    70% {
+      box-shadow: 0 0 0 1rem rgba($green, 0);
+    }
+    100% {
+      box-shadow: 0 0 0 0 rgba($green, 0);
+    }
+  }
+}
+
+@mixin float {
+  @keyframes float {
+    0% {
+      bottom: 3rem;
+    }
+    50% {
+      bottom: 4rem;
+    }
+    100% {
+      bottom: 3rem;
+    }
+  }
+}
+
+%letter-spaced {
+  letter-spacing: 0.25rem;
+}
+
+%elevation-1 {
+  box-shadow: 0 3px 6px rgba(0, 0, 0, 0.16), 0 3px 6px rgba(0, 0, 0, 0.23);
+}
+
+%elevation-2 {
+  box-shadow: 0 10px 20px rgba(0, 0, 0, 0.19), 0 6px 6px rgba(0, 0, 0, 0.23);
+}
+
+%elevation-3 {
+  box-shadow: 0 14px 28px rgba(0, 0, 0, 0.25), 0 10px 10px rgba(0, 0, 0, 0.22);
+}
+
+%elevation-4 {
+  box-shadow: 0 19px 38px rgba(0, 0, 0, 0.30), 0 15px 12px rgba(0, 0, 0, 0.22);
+}
+
+%v-middle {
+  align-items: center;
+  display: flex;
+}
+
+// Defaults
+
+* {
+  font-family: 'Roboto', sans-serif;
+}
+
+body {
+  background-color: $dark-primary;
+  font-weight: 400;
+}
+
+a {
+  color: unset;
+
+  &:hover {
+    color: unset;
+    text-decoration: none;
+  }
+}
+
+// Bootstrap overrides
+
+.navbar {
+  @extend %elevation-3;
+  background-color: mix(white, $dark-primary, 9%) !important;
+}
+
+.navbar-brand, .nav-item {
+  @extend %letter-spaced;
+
+  color: $whitesmoke !important;
+
+  .jam {
+    color: $lightgreen !important;
+  }
+}
+
+.dropdown-toggle:after {
+  content: none
+}
+
+.dropdown-menu {
+  @extend %elevation-4;
+
+  background-color: mix(white, $dark-primary, 15%);
+  border: none;
+  border-radius: 5px;
+}
+
+.dropdown-header {
+  font-size: 1.1em;
+  letter-spacing: 0.1em;
+  font-weight: 300;
+  color: $whitesmoke;
+}
+
+.dropdown-item {
+  font-size: 0.9em;
+  letter-spacing: normal;
+  color: $whitesmoke;
+}
+
+.dropdown-item:hover {
+  background-color: transparent;
+  color: $whitesmoke;
+  text-decoration: none;
+}
+
+.display-1, .display-4 {
+  @extend %letter-spaced;
+
+  color: $lightgray;
+  margin-top: 1.25rem;
+  text-align: center;
+}
+
+.display-4 {
+  font-size: 1.25rem;
+}
+
+.display-4 u {
+  text-decoration: none;
+  border-bottom: 1px solid $whitesmoke
+}
+
+.text-muted {
+  color: $lightgray !important;
+}
+
+.spinner-grow {
+  color: $whitesmoke;
+}
+
+.table {
+  color: $whitesmoke;
+}
+
+// Application styles
+
+.text-light {
+  color: $whitesmoke;
+}
+
+.card {
+  @extend %elevation-2;
+
+  background-color: mix(white, $dark-primary, 5%);
+  padding: 1.2rem;
+}
+
+.info-card {
+  @extend %elevation-2;
+
+  background-color: mix(white, $dark-primary, 5%);
+  color: $whitesmoke;
+  min-height: 120px;
+  padding: 1.3rem;
+  transition: all 0.3s cubic-bezier(.25, .8, .25, 1);
+  border-radius: 5px;
+
+  table {
+    margin-top: 1rem;
+    margin-bottom: 0;
+  }
+
+  &:hover {
+    box-shadow: none;
+  }
+}
+
+.red-accent h4 {
+  color: mix($whitesmoke, $red, 60%);
+}
+
+.green-accent h4 {
+  color: mix($whitesmoke, $green, 60%);
+}
+
+.blue-accent h4 {
+  color: mix($whitesmoke, $blue, 60%);
+}
+
+.lightblue-accent h4 {
+  color: mix($whitesmoke, $lightblue, 60%);
+}
+
+.slim {
+  @extend %letter-spaced;
+
+  font-size: 0.75rem;
+}
+
+.content-middle {
+  @extend %v-middle;
+
+  & > * {
+    margin: 0 auto;
+  }
+}
+
+.content-v-middle {
+  @extend %v-middle;
+}
+
+.weather-summary {
+  color: $whitesmoke;
+
+  .col-md-1, .col-md-2 {
+    align-items: center;
+    display: flex;
+
+    * {
+      margin: 0 auto;
+    }
+  }
+
+  .weather-img {
+    padding: .5rem;
+  }
+}
+
+.btn-round {
+  background-color: $dark-primary;
+  border-radius: 50%;
+  height: 3rem;
+  transition: border 500ms, background-color 500ms;
+  width: 3rem;
+  border: 1px solid $whitesmoke;
+
+  &:hover {
+    background-color: $dark-primary;
+    border: 0.35rem solid $whitesmoke;
+  }
+
+  &:disabled {
+    background-color: transparent;
+    border: 0.15rem dashed $whitesmoke;
+    cursor: default;
+  }
+}
+
+.not-found {
+  margin-top: calc(50vh - 56px - 56px) !important;
+}
+
+.webcam-feed {
+  div {
+    @include pulse;
+
+    animation: pulse-animation 2s infinite;
+    background-color: $green;
+    border-radius: 50%;
+    height: 1rem;
+    position: absolute;
+    right: 2.25rem;
+    top: 1.25rem;
+    width: 1rem;
+  }
+
+  img {
+    width: 100%;
+    height: auto;
+  }
+}
+
+.condition-check {
+  color: $green;
+}
+
+.service-online:before {
+  display: inline-block;
+  content: '';
+  height: 0.75rem;
+  width: 0.75rem;
+  margin-right: 1em;
+  border-radius: 1em;
+  background-color: $green;
+}
+
+.service-offline:before {
+  display: inline-block;
+  content: '';
+  height: 0.75rem;
+  width: 0.75rem;
+  margin-right: 1em;
+  border-radius: 1em;
+  background-color: $red;
+}
+
+.service-problem:before {
+  display: inline-block;
+  content: '';
+  height: 0.75rem;
+  width: 0.75rem;
+  margin-right: 1em;
+  border-radius: 1em;
+  background-color: $orange;
+}
+
+.plant-card {
+  height: 35rem;
+}
+
+.nw-button {
+  @extend %elevation-4;
+
+  background-color: $accent-primary;
+  position: absolute;
+  padding: 0.1rem;
+  bottom: -2rem;
+  right: 1rem;
+  width: 3.9rem;
+  height: 3.9rem;
+  color: $whitesmoke;
+  border-radius: 50%;
+  text-align: center;
+  font-size: 2.6rem;
+  transition: color ease .2s;
+  cursor: pointer;
+
+  &:hover {
+    color: $green;
+  }
+}

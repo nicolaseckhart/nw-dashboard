@@ -52,6 +52,7 @@ export interface SensorMeasurement {
   value: number | string;
   icon?: string;
   unit?: string;
+  condition?: string;
 }
 
 export interface Vent {

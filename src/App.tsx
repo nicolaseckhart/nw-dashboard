@@ -154,9 +154,9 @@ export class App extends React.Component<{}, State> {
               alignRight
               title={
                 this.socket.connected ? (
-                  <span className={this.state.allServicesOnline ? 'service-online' : 'service-problem'}>Online</span>
+                  <span className={this.state.allServicesOnline ? 'service-online' : 'service-problem'}></span>
                 ) : (
-                  <span className={'service-offline'}>Offline</span>
+                  <span className={'service-offline'}></span>
                 )
               }
               id="status-nav-dropdown"
@@ -165,7 +165,6 @@ export class App extends React.Component<{}, State> {
               show={this.state.isServiceListOpen}
             >
               <NavDropdown.Header>Services</NavDropdown.Header>
-              <NavDropdown.Divider />
               <NavDropdown.Item
                 className={
                   this.state.serviceStates.update.clients.includes('nwmon_pi') ? 'service-online' : 'service-offline'
@@ -192,12 +191,12 @@ export class App extends React.Component<{}, State> {
                   this.state.serviceStates.update.clients.includes('rig1') ? 'service-online' : 'service-offline'
                 }
               >
-                mining (rig)
+                mining (rig1)
               </NavDropdown.Item>
             </NavDropdown>
 
             <Link to="/events">
-              <Nav.Item className="mr-5">
+              <Nav.Item className="mr-2">
                 <span className="jam jam-task-list ml-2" />
               </Nav.Item>
             </Link>

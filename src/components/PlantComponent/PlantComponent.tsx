@@ -60,7 +60,7 @@ export class PlantComponent extends React.Component<Props, State> {
   );
 
   render = () => (
-    <div className="mt-5">
+    <div className="mt-5 card plant-card">
       <Modal show={this.state.modalShown} onHide={this.handleClose}>
         <Modal.Header closeButton>
           <Modal.Title>Edit Values</Modal.Title>
@@ -96,7 +96,7 @@ export class PlantComponent extends React.Component<Props, State> {
       <PlantGraphic plantState={this.state.plantState} ventData={this.props.ventData} />
 
       <div className="nw-button" onClick={this.handleShow}>
-        <span className="jam jam-cog" />
+        <span className="jam jam-pencil" />
       </div>
     </div>
   );
