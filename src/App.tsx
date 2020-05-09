@@ -52,11 +52,18 @@ export class App extends React.Component<{}, State> {
     if (process.env.REACT_APP_DEBUG === 'true') {
       this.setState({ sensorData: new SensorData(true) });
     }
+    this.mountTheme();
     this.connectToSocket();
   }
 
   componentWillUnmount() {
     this.socket.close();
+  }
+
+  mountTheme() {
+    const theme = localStorage.getItem('theme');
+    console.log('Loaded theme ' + theme);
+    theme ? document.body.classList.add(theme) : document.body.classList.add('dark');
   }
 
   createSocket = (): SocketIOClient.Socket => io(process.env.REACT_APP_WS_HOST as string);
@@ -112,6 +119,18 @@ export class App extends React.Component<{}, State> {
     this.setState({ isServiceListOpen: false });
   };
 
+  toggleTheme = () => {
+    const registeredThemes = ['dark', 'material-dark']; // TODO needs a better place
+
+    const currentTheme = localStorage.getItem('theme');
+    const themeIndex = registeredThemes.findIndex((theme) => theme == currentTheme);
+
+    const newTheme = registeredThemes[themeIndex + 1 >= registeredThemes.length ? 0 : themeIndex + 1];
+    document.body.classList.remove(currentTheme ? currentTheme : 'dark');
+    localStorage.setItem('theme', newTheme);
+    this.mountTheme();
+  };
+
   render = () => (
     <Router>
       <div>
@@ -150,6 +169,13 @@ export class App extends React.Component<{}, State> {
                 </Nav.Item>
               </Link>
             </Nav>
+
+            <Link to="/events">
+              <Nav.Item className="mr-2">
+                <span className="jam jam-task-list ml-2" />
+              </Nav.Item>
+            </Link>
+
             <NavDropdown
               alignRight
               title={
@@ -194,12 +220,9 @@ export class App extends React.Component<{}, State> {
                 mining (rig1)
               </NavDropdown.Item>
             </NavDropdown>
-
-            <Link to="/events">
-              <Nav.Item className="mr-2">
-                <span className="jam jam-task-list ml-2" />
-              </Nav.Item>
-            </Link>
+            <Nav.Item className="mr-2">
+              <button className="jam jam-brightness ml-2 theme-button" onClick={this.toggleTheme} />
+            </Nav.Item>
           </Navbar.Collapse>
         </Navbar>
 

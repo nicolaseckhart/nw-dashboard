@@ -158,7 +158,7 @@ export class SensorHistory extends React.Component<RouteChildrenProps<HistoryNav
             {this.renderScopeSelect()}
             <Row>
               {this.state.historyGraphs.map((historyGraph: HistoryGraph) => (
-                <Col md={this.graphColumnWidth()} key={historyGraph.title}>
+                <Col md={this.graphColumnWidth()} className="card history-card" key={historyGraph.title}>
                   <SimpleLineChart {...historyGraph} />
                 </Col>
               ))}

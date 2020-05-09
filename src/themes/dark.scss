@@ -1,0 +1,332 @@
+@import url('https://fonts.googleapis.com/css?family=Open+Sans:300,400&display=swap');
+
+.dark {
+  // Variables
+
+  $white: #fff;
+  $whitesmoke: #f5f5f5;
+  $lightgray: #d3d3d3;
+  $darkgray: #6c757d;
+  $black: #000;
+  $red: #be0000;
+  $blue: #0000be;
+  $lightgreen: #32cd32;
+  $green: #00be00;
+  $lightblue: #1e90ff;
+  $loading-bg: #f5f4e0;
+  $dark: #343a40;
+  $dark2: #1b1f25;
+  $orange: #ff5400;
+
+  // Mix-ins & shared snippets
+
+  @mixin pulse {
+    @keyframes pulse-animation {
+      0% {
+        box-shadow: 0 0 0 0 rgba($green, 0.8);
+      }
+      70% {
+        box-shadow: 0 0 0 1rem rgba($green, 0);
+      }
+      100% {
+        box-shadow: 0 0 0 0 rgba($green, 0);
+      }
+    }
+  }
+
+  @mixin float {
+    @keyframes float {
+      0% {
+        bottom: 3rem;
+      }
+      50% {
+        bottom: 4rem;
+      }
+      100% {
+        bottom: 3rem;
+      }
+    }
+  }
+
+  %letter-spaced {
+    letter-spacing: 0.3rem;
+  }
+
+  %fw-light {
+    font-weight: 300;
+  }
+
+  %v-middle {
+    align-items: center;
+    display: flex;
+  }
+
+
+  // Body
+  background-color: $dark;
+  font-family: 'Open Sans', sans-serif;
+
+  a {
+    color: unset;
+
+    &:hover {
+      color: unset;
+      text-decoration: none;
+    }
+  }
+
+  // Bootstrap overrides
+
+  .navbar {
+    background-color: $dark2 !important;
+    border-bottom: .15rem dashed $dark;
+  }
+
+  .navbar-brand, .nav-item {
+    @extend %letter-spaced, %fw-light;
+
+    color: $whitesmoke !important;
+
+    .jam {
+      color: $lightgreen !important;
+    }
+  }
+
+  .dropdown-toggle:after {
+    content: none
+  }
+
+  .dropdown-menu {
+    background-color: $dark;
+    border: .04rem solid $whitesmoke;
+    border-radius: 0;
+  }
+
+  .dropdown-header {
+    font-weight: bold;
+    color: $whitesmoke;
+  }
+
+  .dropdown-item {
+    font-size: small;
+    color: $whitesmoke;
+  }
+
+  .dropdown-item:hover {
+    background-color: transparent;
+    color: $whitesmoke;
+    text-decoration: none;
+  }
+
+  .display-1, .display-4 {
+    @extend %letter-spaced;
+
+    color: $lightgray;
+    margin-top: 1.25rem;
+    text-align: center;
+  }
+
+  .display-4 {
+    font-size: 1.25rem;
+  }
+
+  .text-muted {
+    color: $lightgray !important;
+  }
+
+  .spinner-grow {
+    color: $whitesmoke;
+  }
+
+  .table {
+    color: $whitesmoke;
+  }
+
+  // Application styles
+
+  .text-light {
+    color: $whitesmoke;
+  }
+
+  .info-card {
+    border: .15rem dashed $lightgray;
+    min-height: 120px;
+    padding: 1rem;
+    transition: margin 300ms;
+    color: $whitesmoke;
+
+    table {
+      @extend %fw-light;
+
+      margin-top: 1rem;
+      margin-bottom: 0;
+    }
+
+    &:hover {
+      margin-top: .5rem;
+      margin-bottom: -0.5rem;
+    }
+  }
+
+  .red-accent {
+    border-color: $red;
+  }
+
+  .green-accent {
+    border-color: $green;
+  }
+
+  .blue-accent {
+    border-color: $blue;
+  }
+
+  .lightblue-accent {
+    border-color: $lightblue;
+  }
+
+  .slim {
+    @extend %letter-spaced, %fw-light;
+
+    font-size: 0.75rem;
+  }
+
+  .content-middle {
+    @extend %v-middle;
+
+    & > * {
+      margin: 0 auto;
+    }
+  }
+
+  .content-v-middle {
+    @extend %v-middle;
+  }
+
+  .weather-summary {
+    color: $whitesmoke;
+
+    .col-md-1, .col-md-2 {
+      align-items: center;
+      display: flex;
+
+      * {
+        margin: 0 auto;
+      }
+    }
+
+    .weather-img {
+      padding: .5rem;
+    }
+  }
+
+  .btn-round {
+    background-color: $dark;
+    border-radius: 50%;
+    height: 3rem;
+    transition: border 500ms, background-color 500ms;
+    width: 3rem;
+    border: 1px solid $whitesmoke;
+
+    &:hover {
+      background-color: $dark;
+      border: 0.35rem solid $whitesmoke;
+    }
+
+    &:disabled {
+      background-color: transparent;
+      border: 0.15rem dashed $whitesmoke;
+      cursor: default;
+    }
+  }
+
+  .not-found {
+    margin-top: calc(50vh - 56px - 56px) !important;
+  }
+
+  .webcam-feed {
+    div {
+      @include pulse;
+
+      animation: pulse-animation 2s infinite;
+      background-color: $green;
+      border-radius: 50%;
+      height: 1rem;
+      position: absolute;
+      right: 2.25rem;
+      top: 1.25rem;
+      width: 1rem;
+    }
+
+    img {
+      width: 100%;
+      height: auto;
+    }
+  }
+
+  .service-online:before {
+    display: inline-block;
+    content: '';
+    height: 0.75rem;
+    width: 0.75rem;
+    margin-right: 1em;
+    border-radius: 1em;
+    background-color: $green;
+  }
+
+  .service-offline:before {
+    display: inline-block;
+    content: '';
+    height: 0.75rem;
+    width: 0.75rem;
+    margin-right: 1em;
+    border-radius: 1em;
+    background-color: $red;
+  }
+
+  .service-problem:before {
+    display: inline-block;
+    content: '';
+    height: 0.75rem;
+    width: 0.75rem;
+    margin-right: 1em;
+    border-radius: 1em;
+    background-color: $orange;
+  }
+
+  .history-card {
+    background-color: transparent;
+    border: none;
+  }
+
+  .plant-card {
+    background-color: transparent;
+    border: none;
+  }
+
+  .theme-button {
+    background-color: transparent;
+    border: none;
+
+    &:focus {
+      outline: none;
+    }
+  }
+
+  .nw-button {
+    margin: -10rem auto 2rem;
+    width: 4rem;
+    height: 4rem;
+    color: $whitesmoke;
+    border-radius: 50%;
+    background-color: $dark2;
+    border: .15rem dashed $dark;
+    text-align: center;
+    font-size: 2.6rem;
+    transition: color ease .2s;
+    cursor: pointer;
+
+    &:hover {
+      color: $green;
+    }
+  }
+}
