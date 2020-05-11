@@ -1,4 +1,5 @@
-import { SensorMeasurement, Sensor, JsonSensorDumpRig, JsonSensorDumpPi } from '../shared';
+import { SensorMeasurement, Sensor, JsonSensorDumpRig, JsonSensorDumpPi, Condition } from '../shared';
+import condRules from '../data/conditionRules.json';
 
 export default class SensorData {
   public static readonly ENVIRONMENTS: Array<{ title: string; identifier: 'air' | 'water' }> = [
@@ -44,14 +45,14 @@ export default class SensorData {
             value: Number(json.air.intake_coolant.temperature),
             unit: ' °C',
             icon: 'temperature',
-            condition: 'check', // TODO create lookup table and determine if value is ok or not
+            condition: false,
           } as SensorMeasurement,
           {
             name: 'Humidity',
             value: Number(json.air.intake_coolant.humidity),
             unit: '%',
             icon: 'cloud',
-            condition: 'check',
+            condition: false,
           } as SensorMeasurement,
         ],
       } as Sensor,
@@ -66,14 +67,14 @@ export default class SensorData {
             value: Number(json.air.intake_heatant.temperature),
             unit: ' °C',
             icon: 'temperature',
-            condition: 'check',
+            condition: false,
           } as SensorMeasurement,
           {
             name: 'Humidity',
             value: Number(json.air.intake_heatant.humidity),
             unit: '%',
             icon: 'cloud',
-            condition: 'check',
+            condition: false,
           } as SensorMeasurement,
         ],
       } as Sensor,
@@ -88,14 +89,14 @@ export default class SensorData {
             value: Number(json.air.tent.temperature),
             unit: ' °C',
             icon: 'temperature',
-            condition: 'check',
+            condition: this.identifyCondition('tent_temp', Number(json.air.tent.temperature)),
           } as SensorMeasurement,
           {
             name: 'Humidity',
             value: Number(json.air.tent.humidity),
             unit: '%',
             icon: 'cloud',
-            condition: 'check',
+            condition: this.identifyCondition('tent_humid', Number(json.air.tent.humidity)),
           } as SensorMeasurement,
         ],
       } as Sensor,
@@ -115,13 +116,13 @@ export default class SensorData {
             value: Number(json.water.temperature),
             unit: ' °C',
             icon: 'temperature',
-            condition: 'check',
+            condition: this.identifyCondition('water_temp', Number(json.water.temperature)),
           } as SensorMeasurement,
           {
             name: 'Level',
             value: json.water.level,
             icon: 'water-drop-f',
-            condition: 'check',
+            condition: this.identifyCondition('water_level', json.water.level),
           } as SensorMeasurement,
         ],
       } as Sensor,
@@ -134,7 +135,7 @@ export default class SensorData {
             value: Number(json.water.DO.value),
             unit: json.water.DO.units,
             icon: 'water-drop',
-            condition: 'check',
+            condition: this.identifyCondition('water_do', Number(json.water.DO.value)),
           } as SensorMeasurement,
         ],
       } as Sensor,
@@ -147,7 +148,7 @@ export default class SensorData {
             value: Number(json.water.PH.value),
             unit: json.water.PH.units,
             icon: 'water-drop',
-            condition: 'check',
+            condition: this.identifyCondition('water_ph', Number(json.water.PH.value)),
           } as SensorMeasurement,
         ],
       } as Sensor,
@@ -160,11 +161,24 @@ export default class SensorData {
             value: Number(json.water.TDS.value),
             unit: json.water.TDS.units,
             icon: 'water-drop',
-            condition: 'check',
+            condition: this.identifyCondition('water_tds', Number(json.water.TDS.value)),
           } as SensorMeasurement,
         ],
       } as Sensor,
     ];
+  }
+
+  private static identifyCondition(name: string, value: number | string): Condition {
+    if (typeof value == 'number') {
+      if (value >= (condRules as any)[name].good_lb && value <= (condRules as any)[name].good_ub)
+        return 'check' as Condition;
+      if (value >= (condRules as any)[name].warning_lb && value <= (condRules as any)[name].warning_ub)
+        return 'triangle-danger' as Condition;
+    } else {
+      if (value == 'Good') return 'check' as Condition;
+      if (value == 'Low') return 'triangle-danger' as Condition;
+    }
+    return 'alert' as Condition;
   }
 
   private static readonly DEBUG_DATA: Sensor[] = [

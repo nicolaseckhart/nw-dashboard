@@ -3,6 +3,7 @@ export type SensorEnvironment = 'air' | 'water';
 export type SensorIdentifier = 'intakecoolant' | 'intakeheatant' | 'tent' | 'water' | 'do' | 'ph' | 'tds';
 export type HistoryScope = 'day' | 'week' | 'month' | 'year';
 export type WebcamIdentifier = 'cam0' | 'cam1';
+export type Condition = 'check' | 'triangle-danger' | 'alert';
 
 export interface DailyWeather {
   current: {
@@ -52,7 +53,7 @@ export interface SensorMeasurement {
   value: number | string;
   icon?: string;
   unit?: string;
-  condition?: string;
+  condition: Condition | boolean;
 }
 
 export interface Vent {
