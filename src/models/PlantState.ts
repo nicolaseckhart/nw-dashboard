@@ -44,6 +44,10 @@ export default class PlantState {
     return this;
   }
 
+  serializeStartTime() {
+    return this.startTime.toDate().toISOString().slice(0, 19).replace('T', ' ');
+  }
+
   serializePlantNames(): string {
     return `{"plant1":"${this.plant1}","plant2":"${this.plant2}","plant3":"${this.plant3}","plant4":"${this.plant4}"}`;
   }

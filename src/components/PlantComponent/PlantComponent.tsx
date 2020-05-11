@@ -4,7 +4,7 @@ import GrowthProgram from '../../models/GrowthProgram';
 import { Row, Col, Button, Modal, Form } from 'react-bootstrap';
 import { PlantGraphic } from './PlantGraphic';
 import VentData from '../../models/VentData';
-import { apiRequestOptions } from '../../shared';
+import {apiPostRequestOptions, apiRequestOptions, uriEncode} from '../../shared';
 
 interface State {
   plantState: PlantState | null;
@@ -54,41 +54,25 @@ export class PlantComponent extends React.Component<Props, State> {
   };
 
   handleSubmit = () => {
-    const ps = this.state.plantState!;
+    const body = uriEncode([
+      { id: this.state.plantState!.id },
+      { startTime: this.state.plantState!.serializeStartTime() },
+      { plantNames: this.state.plantState!.serializePlantNames()},
+    ]);
 
-    const formBody = [];
-    formBody.push(encodeURIComponent('id') + '=' + encodeURIComponent(ps.id));
-    formBody.push(
-      encodeURIComponent('startTime') +
-        '=' +
-        encodeURIComponent(ps.startTime.toDate().toISOString().slice(0, 19).replace('T', ' ')),
-    );
-    formBody.push(encodeURIComponent('plantNames') + '=' + encodeURIComponent(ps.serializePlantNames()));
-    const body = formBody.join('&');
-
-    fetch(`${process.env.REACT_APP_API_HOST}/plant/update`, {
-      method: 'POST',
-      headers: new Headers({
-        Authorization: process.env.REACT_APP_API_KEY as string,
-        'Content-Type': 'application/x-www-form-urlencoded',
-      }),
-      body: body,
-    }).then(() => this.handleClose());
+    fetch(`${process.env.REACT_APP_API_HOST}/plant/update`, apiPostRequestOptions(body)).then(() => this.handleClose());
   };
 
   startNewPlantState = async () => {
-    const urlData = `?plantNames=${encodeURI(PlantState.defaultPlantNames())}`;
+    const body = uriEncode([
+      { plantNames: PlantState.defaultPlantNames() },
+    ]);
 
-    fetch(`${process.env.REACT_APP_API_HOST}/plant/create${urlData}`, {
-      method: 'POST',
-      headers: new Headers({
-        Authorization: process.env.REACT_APP_API_KEY as string,
-        'Content-Type': 'application/x-www-form-urlencoded',
-      }),
-    })
+    fetch(`${process.env.REACT_APP_API_HOST}/plant/create`, apiPostRequestOptions(body))
       .then((response) => response.json())
       .then((data) => console.log(data));
-    // TODO update state based on newly created state
+
+    // TODO: Handle new plant state
   };
 
   renderGrowthProgramInfo = () => {
