@@ -56,8 +56,6 @@ export class PlantComponent extends React.Component<Props, State> {
   handleSubmit = async () => {
     const ps = this.state.plantState!;
 
-    // TODO: This produces a cors error
-
     const formData = new FormData();
     formData.append('id', ps.id.toString());
     formData.append('startTime', ps.startTime.toDate().toISOString());
@@ -69,25 +67,9 @@ export class PlantComponent extends React.Component<Props, State> {
         Authorization: process.env.REACT_APP_API_KEY as string,
         'Content-Type': 'multipart/form-data'
       }),
-      body: formData
+      body: formData,
+      mode: 'no-cors'
     });
-
-    // TODO: This json variant doesn't work either
-
-    // const jsonData = JSON.stringify({
-    //   id: ps.id.toString(),
-    //   startTime: ps.startTime.toISOString(),
-    //   plantNames: ps.serializePlantNames(),
-    // });
-    //
-    // await fetch(`${process.env.REACT_APP_API_HOST}/plant/update`, {
-    //   method: 'POST',
-    //   headers: new Headers({
-    //     Authorization: process.env.REACT_APP_API_KEY as string,
-    //     'Content-Type': 'application/json'
-    //   }),
-    //   body: jsonData
-    // });
   };
 
   renderGrowthProgramInfo = () => {
