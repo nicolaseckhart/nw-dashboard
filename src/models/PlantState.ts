@@ -49,6 +49,6 @@ export default class PlantState {
   }
 
   static defaultPlantNames(): string {
-    return '{"plant1":"Plant 1","plant2":"Plant 2","plant3":"Plant 3","plant4":"Plant 4"}'
+    return '{"plant1":"Plant 1","plant2":"Plant 2","plant3":"Plant 3","plant4":"Plant 4"}';
   }
 }

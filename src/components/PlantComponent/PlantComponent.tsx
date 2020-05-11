@@ -5,7 +5,6 @@ import { Row, Col, Button, Modal, Form } from 'react-bootstrap';
 import { PlantGraphic } from './PlantGraphic';
 import VentData from '../../models/VentData';
 import { apiRequestOptions } from '../../shared';
-import moment from 'moment';
 
 interface State {
   plantState: PlantState | null;
@@ -57,15 +56,17 @@ export class PlantComponent extends React.Component<Props, State> {
   handleSubmit = () => {
     const ps = this.state.plantState!;
 
-    const urlData = `?id=${ps.id}&startTime=${ps.startTime.toDate().toISOString()}&plantNames=${encodeURI(ps.serializePlantNames())}`;
+    const urlData = `?id=${ps.id}&startTime=${ps.startTime.toDate().toISOString()}&plantNames=${encodeURI(
+      ps.serializePlantNames(),
+    )}`;
 
     fetch(`${process.env.REACT_APP_API_HOST}/plant/update${urlData}`, {
       method: 'POST',
       headers: new Headers({
-        'Authorization': process.env.REACT_APP_API_KEY as string,
-        'Content-Type': 'application/x-www-form-urlencoded'
+        Authorization: process.env.REACT_APP_API_KEY as string,
+        'Content-Type': 'application/x-www-form-urlencoded',
       }),
-    }).then(() => this.handleClose())
+    }).then(() => this.handleClose());
   };
 
   startNewPlantState = async () => {
@@ -74,10 +75,12 @@ export class PlantComponent extends React.Component<Props, State> {
     fetch(`${process.env.REACT_APP_API_HOST}/plant/create${urlData}`, {
       method: 'POST',
       headers: new Headers({
-        'Authorization': process.env.REACT_APP_API_KEY as string,
-        'Content-Type': 'application/x-www-form-urlencoded'
+        Authorization: process.env.REACT_APP_API_KEY as string,
+        'Content-Type': 'application/x-www-form-urlencoded',
       }),
-    }).then(response => response.json()).then(data => console.log(data));
+    })
+      .then((response) => response.json())
+      .then((data) => console.log(data));
     // TODO update state based on newly created state
   };
 
