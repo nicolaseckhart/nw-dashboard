@@ -61,13 +61,14 @@ export class PlantComponent extends React.Component<Props, State> {
     formData.append('startTime', ps.startTime.toDate().toISOString());
     formData.append('plantNames', ps.serializePlantNames());
 
-    await fetch(`${process.env.REACT_APP_API_HOST}/plant/update`, {
+    const urlData = `?id=${ps.id}&startTime=${ps.startTime.toDate().toISOString()}&plantNames=${encodeURI(ps.serializePlantNames())}`;
+
+    await fetch(`${process.env.REACT_APP_API_HOST}/plant/update${urlData}`, {
       method: 'POST',
       headers: new Headers({
         Authorization: process.env.REACT_APP_API_KEY as string,
         'Content-Type': 'multipart/form-data'
       }),
-      body: formData,
       mode: 'no-cors'
     });
   };
