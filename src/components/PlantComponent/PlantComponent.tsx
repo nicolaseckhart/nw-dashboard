@@ -148,7 +148,7 @@ export class PlantComponent extends React.Component<Props, State> {
   render = () => {
     if (!this.state.plantState) return null;
     return (
-      <div className="mt-5">
+      <div className="mt-5 card plant-card">
         {this.renderEditPlantStateForm()}
         {this.renderGrowthProgramInfo()}
 

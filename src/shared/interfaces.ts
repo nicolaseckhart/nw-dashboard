@@ -52,6 +52,7 @@ export interface SensorMeasurement {
   value: number | string;
   icon?: string;
   unit?: string;
+  condition?: string;
 }
 
 export interface Vent {
@@ -134,6 +135,22 @@ export interface JsonSensorDumpRig {
 export interface JsonWebcamDump {
   cam0?: string;
   cam1?: string;
+}
+
+export interface PlantEvent {
+  time: string;
+  device: string;
+  description: string;
+}
+
+export interface JsonPlantEvent {
+  time: string;
+  device: string;
+  description: string;
+}
+
+export interface JsonEventLogDump {
+  events: PlantEvent[];
 }
 
 export interface JsonMiningDump {

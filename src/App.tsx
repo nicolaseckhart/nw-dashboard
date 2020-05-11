@@ -12,15 +12,18 @@ import { SensorHistory } from './components/SensorHistory/SensorHistory';
 import { WebcamOverview } from './components/WebcamOverview/WebcamOverview';
 import { NotFound } from './components/NotFound/NotFound';
 import { MiningOverview } from './components/MiningOverview/MiningOverview';
+import { EventOverview } from './components/EventOverview/EventOverview';
 import WeatherSummary from './components/WeatherSummary/WeatherSummary';
 import { PlantComponent } from './components/PlantComponent/PlantComponent';
 import VentData from './models/VentData';
+import EventLogData from './models/EventLogData';
 
 interface State {
   sensorData: SensorData;
   webcamData: WebcamData;
   ventData: VentData;
   miningData: MiningData | null;
+  eventLogData: EventLogData | null;
   serviceStates: WSUpdateData;
   isServiceListOpen: boolean;
   allServicesOnline: boolean;
@@ -36,6 +39,7 @@ export class App extends React.Component<{}, State> {
       webcamData: new WebcamData(),
       ventData: new VentData(),
       miningData: null,
+      eventLogData: new EventLogData(),
       isServiceListOpen: false,
       serviceStates: new WSUpdateData(),
       allServicesOnline: false,
@@ -48,11 +52,18 @@ export class App extends React.Component<{}, State> {
     if (process.env.REACT_APP_DEBUG === 'true') {
       this.setState({ sensorData: new SensorData(true) });
     }
+    this.mountTheme();
     this.connectToSocket();
   }
 
   componentWillUnmount() {
     this.socket.close();
+  }
+
+  mountTheme() {
+    const theme = localStorage.getItem('theme');
+    console.log('Loaded theme ' + theme);
+    theme ? document.body.classList.add(theme) : document.body.classList.add('dark');
   }
 
   createSocket = (): SocketIOClient.Socket => io(process.env.REACT_APP_WS_HOST as string);
@@ -108,6 +119,18 @@ export class App extends React.Component<{}, State> {
     this.setState({ isServiceListOpen: false });
   };
 
+  toggleTheme = () => {
+    const registeredThemes = ['dark', 'material-dark']; // TODO needs a better place
+
+    const currentTheme = localStorage.getItem('theme');
+    const themeIndex = registeredThemes.findIndex((theme) => theme == currentTheme);
+
+    const newTheme = registeredThemes[themeIndex + 1 >= registeredThemes.length ? 0 : themeIndex + 1];
+    document.body.classList.remove(currentTheme ? currentTheme : 'dark');
+    localStorage.setItem('theme', newTheme);
+    this.mountTheme();
+  };
+
   render = () => (
     <Router>
       <div>
@@ -146,52 +169,61 @@ export class App extends React.Component<{}, State> {
                 </Nav.Item>
               </Link>
             </Nav>
+
+            <Link to="/events">
+              <Nav.Item className="mr-2">
+                <span className="jam jam-task-list ml-2" />
+              </Nav.Item>
+            </Link>
+
+            <NavDropdown
+              alignRight
+              title={
+                this.socket.connected ? (
+                  <span className={this.state.allServicesOnline ? 'service-online' : 'service-problem'}></span>
+                ) : (
+                  <span className={'service-offline'}></span>
+                )
+              }
+              id="status-nav-dropdown"
+              onMouseEnter={this.handleServiceListOpen}
+              onMouseLeave={this.handleServiceListClose}
+              show={this.state.isServiceListOpen}
+            >
+              <NavDropdown.Header>Services</NavDropdown.Header>
+              <NavDropdown.Item
+                className={
+                  this.state.serviceStates.update.clients.includes('nwmon_pi') ? 'service-online' : 'service-offline'
+                }
+              >
+                nwmon (pi)
+              </NavDropdown.Item>
+              <NavDropdown.Item
+                className={
+                  this.state.serviceStates.update.clients.includes('nwmon_rig') ? 'service-online' : 'service-offline'
+                }
+              >
+                nwmon (rig)
+              </NavDropdown.Item>
+              <NavDropdown.Item
+                className={
+                  this.state.serviceStates.update.clients.includes('nwcam') ? 'service-online' : 'service-offline'
+                }
+              >
+                nwcam
+              </NavDropdown.Item>
+              <NavDropdown.Item
+                className={
+                  this.state.serviceStates.update.clients.includes('rig1') ? 'service-online' : 'service-offline'
+                }
+              >
+                mining (rig1)
+              </NavDropdown.Item>
+            </NavDropdown>
+            <Nav.Item className="mr-2">
+              <button className="jam jam-brightness ml-2 theme-button" onClick={this.toggleTheme} />
+            </Nav.Item>
           </Navbar.Collapse>
-          <NavDropdown
-            alignRight
-            title={
-              this.socket.connected ? (
-                <span className={this.state.allServicesOnline ? 'service-online' : 'service-problem'}>Online</span>
-              ) : (
-                <span className={'service-offline'}>Offline</span>
-              )
-            }
-            id="status-nav-dropdown"
-            onMouseEnter={this.handleServiceListOpen}
-            onMouseLeave={this.handleServiceListClose}
-            show={this.state.isServiceListOpen}
-          >
-            <NavDropdown.Header>Services</NavDropdown.Header>
-            <NavDropdown.Divider />
-            <NavDropdown.Item
-              className={
-                this.state.serviceStates.update.clients.includes('nwmon_pi') ? 'service-online' : 'service-offline'
-              }
-            >
-              nwmon (pi)
-            </NavDropdown.Item>
-            <NavDropdown.Item
-              className={
-                this.state.serviceStates.update.clients.includes('nwmon_rig') ? 'service-online' : 'service-offline'
-              }
-            >
-              nwmon (rig)
-            </NavDropdown.Item>
-            <NavDropdown.Item
-              className={
-                this.state.serviceStates.update.clients.includes('nwcam') ? 'service-online' : 'service-offline'
-              }
-            >
-              nwcam
-            </NavDropdown.Item>
-            <NavDropdown.Item
-              className={
-                this.state.serviceStates.update.clients.includes('rig1') ? 'service-online' : 'service-offline'
-              }
-            >
-              mining (rig)
-            </NavDropdown.Item>
-          </NavDropdown>
         </Navbar>
 
         <Container>
@@ -209,6 +241,9 @@ export class App extends React.Component<{}, State> {
             <Route exact path="/history/:sensor/:scope" component={SensorHistory} />
             <Route exact path="/webcams">
               <WebcamOverview webcamData={this.state.webcamData} />
+            </Route>
+            <Route exact path="/events">
+              <EventOverview eventLogData={this.state.eventLogData} />
             </Route>
             <Route path="*" component={NotFound} />
           </Switch>
