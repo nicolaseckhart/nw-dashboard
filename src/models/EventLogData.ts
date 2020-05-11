@@ -1,4 +1,4 @@
-import { JsonEventLogDump, PlantEvent } from '../shared';
+import { JsonEventLogDump } from '../shared';
 import PlantEventData from './PlantEventData';
 
 export default class EventLogData {

@@ -60,11 +60,10 @@ export class App extends React.Component<{}, State> {
     this.socket.close();
   }
 
-  mountTheme() {
+  mountTheme = () => {
     const theme = localStorage.getItem('theme');
-    console.log('Loaded theme ' + theme);
     theme ? document.body.classList.add(theme) : document.body.classList.add('dark');
-  }
+  };
 
   createSocket = (): SocketIOClient.Socket => io(process.env.REACT_APP_WS_HOST as string);
 
@@ -123,7 +122,7 @@ export class App extends React.Component<{}, State> {
     const registeredThemes = ['dark', 'material-dark']; // TODO needs a better place
 
     const currentTheme = localStorage.getItem('theme');
-    const themeIndex = registeredThemes.findIndex((theme) => theme == currentTheme);
+    const themeIndex = registeredThemes.findIndex((theme) => theme === currentTheme);
 
     const newTheme = registeredThemes[themeIndex + 1 >= registeredThemes.length ? 0 : themeIndex + 1];
     document.body.classList.remove(currentTheme ? currentTheme : 'dark');

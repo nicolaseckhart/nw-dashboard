@@ -169,14 +169,14 @@ export default class SensorData {
   }
 
   private static identifyCondition(name: string, value: number | string): Condition {
-    if (typeof value == 'number') {
+    if (typeof value === 'number') {
       if (value >= (condRules as any)[name].good_lb && value <= (condRules as any)[name].good_ub)
         return 'check' as Condition;
       if (value >= (condRules as any)[name].warning_lb && value <= (condRules as any)[name].warning_ub)
         return 'triangle-danger' as Condition;
     } else {
-      if (value == 'Good') return 'check' as Condition;
-      if (value == 'Low') return 'triangle-danger' as Condition;
+      if (value === 'Good') return 'check' as Condition;
+      if (value === 'Low') return 'triangle-danger' as Condition;
     }
     return 'alert' as Condition;
   }
