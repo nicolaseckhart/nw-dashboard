@@ -58,7 +58,11 @@ export class PlantComponent extends React.Component<Props, State> {
 
     const formBody = [];
     formBody.push(encodeURIComponent('id') + '=' + encodeURIComponent(ps.id));
-    formBody.push(encodeURIComponent('startTime') + '=' + encodeURIComponent(ps.startTime.toDate().toISOString()));
+    formBody.push(
+      encodeURIComponent('startTime') +
+        '=' +
+        encodeURIComponent(ps.startTime.toDate().toISOString().slice(0, 19).replace('T', ' ')),
+    );
     formBody.push(encodeURIComponent('plantNames') + '=' + encodeURIComponent(ps.serializePlantNames()));
     const body = formBody.join('&');
 
@@ -71,7 +75,6 @@ export class PlantComponent extends React.Component<Props, State> {
       body: body,
     }).then(() => this.handleClose());
   };
-
 
   startNewPlantState = async () => {
     const urlData = `?plantNames=${encodeURI(PlantState.defaultPlantNames())}`;
