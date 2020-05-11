@@ -56,20 +56,14 @@ export class PlantComponent extends React.Component<Props, State> {
   handleSubmit = async () => {
     const ps = this.state.plantState!;
 
-    const formData = new FormData();
-    formData.append('id', ps.id.toString());
-    formData.append('startTime', ps.startTime.toDate().toISOString());
-    formData.append('plantNames', ps.serializePlantNames());
-
     const urlData = `?id=${ps.id}&startTime=${ps.startTime.toDate().toISOString()}&plantNames=${encodeURI(ps.serializePlantNames())}`;
 
     await fetch(`${process.env.REACT_APP_API_HOST}/plant/update${urlData}`, {
       method: 'POST',
       headers: new Headers({
-        Authorization: process.env.REACT_APP_API_KEY as string,
-        'Content-Type': 'multipart/form-data'
+        'Authorization': process.env.REACT_APP_API_KEY as string,
+        'Content-Type': 'application/x-www-form-urlencoded'
       }),
-      mode: 'no-cors'
     });
   };
 
