@@ -17,6 +17,7 @@
   $dark: #343a40;
   $dark2: #1b1f25;
   $orange: #ff5400;
+  $brightorange: #ffa300;
 
   // Mix-ins & shared snippets
 
@@ -328,5 +329,17 @@
     &:hover {
       color: $green;
     }
+  }
+
+  .condition-check {
+    color: $green;
+  }
+
+  .condition-triangle-danger {
+    color: $brightorange;
+  }
+
+  .condition-alert {
+    color: $red;
   }
 }

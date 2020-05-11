@@ -17,6 +17,7 @@
   $lightblue: #1e90ff;
   $loading-bg: #f5f4e0;
   $orange: #ff5400;
+  $brightorange: #ffa300;
 
   // Mix-ins & shared snippets
 
@@ -293,6 +294,15 @@
   .condition-check {
     color: $green;
   }
+
+  .condition-triangle-danger {
+    color: $brightorange;
+  }
+
+  .condition-alert {
+    color: $red;
+  }
+
 
   .service-online:before {
     display: inline-block;

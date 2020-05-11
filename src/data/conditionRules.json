@@ -1,0 +1,36 @@
+{
+  "tent_humid": {
+    "warning_ub": 70,
+    "good_ub": 60,
+    "good_lb": 40,
+    "warning_lb": 30
+  },
+  "tent_temp": {
+    "warning_ub": 33,
+    "good_ub": 30,
+    "good_lb": 19,
+    "warning_lb": 14
+  },
+  "water_temp": {
+    "warning_ub": 25,
+    "good_ub": 22,
+    "good_lb": 17,
+    "warning_lb": 15
+  },
+  "water_do": {
+    "warning_ub": 200000,
+    "good_ub": 20000,
+    "good_lb": 8.3,
+    "warning_lb": 6.5
+  },
+  "water_ph": {
+    "warning_ub": 7,
+    "good_ub": 6.5,
+    "good_lb": 5.5,
+    "warning_lb": 5
+  },
+  "water_tds": {
+    "good_lb": 550,
+    "warning_lb": 300
+  }
+}
