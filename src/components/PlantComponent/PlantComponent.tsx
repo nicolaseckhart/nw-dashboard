@@ -28,7 +28,6 @@ export class PlantComponent extends React.Component<Props, State> {
 
   async componentDidMount() {
     const response = await this.fetchPlantData();
-    console.log(response);
     this.setPlantState(response);
   }
 
@@ -57,23 +56,38 @@ export class PlantComponent extends React.Component<Props, State> {
   handleSubmit = async () => {
     const ps = this.state.plantState!;
 
+    // TODO: This produces a cors error
+
     const formData = new FormData();
     formData.append('id', ps.id.toString());
-    formData.append('startTime', ps.startTime.toDate().toDateString());
+    formData.append('startTime', ps.startTime.toDate().toISOString());
     formData.append('plantNames', ps.serializePlantNames());
-
-    const json = {
-      id: ps.id.toString(),
-      startTime: ps.startTime.toISOString(),
-      plantNames: ps.serializePlantNames(),
-    };
 
     await fetch(`${process.env.REACT_APP_API_HOST}/plant/update`, {
       method: 'POST',
-      headers: { 'Content-Type': 'application/json', Authorization: process.env.REACT_APP_API_KEY as string },
-      body: JSON.stringify(json),
-      mode: 'no-cors',
+      headers: new Headers({
+        Authorization: process.env.REACT_APP_API_KEY as string,
+        'Content-Type': 'multipart/form-data'
+      }),
+      body: formData
     });
+
+    // TODO: This json variant doesn't work either
+
+    // const jsonData = JSON.stringify({
+    //   id: ps.id.toString(),
+    //   startTime: ps.startTime.toISOString(),
+    //   plantNames: ps.serializePlantNames(),
+    // });
+    //
+    // await fetch(`${process.env.REACT_APP_API_HOST}/plant/update`, {
+    //   method: 'POST',
+    //   headers: new Headers({
+    //     Authorization: process.env.REACT_APP_API_KEY as string,
+    //     'Content-Type': 'application/json'
+    //   }),
+    //   body: jsonData
+    // });
   };
 
   renderGrowthProgramInfo = () => {

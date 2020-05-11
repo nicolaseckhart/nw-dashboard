@@ -9,7 +9,6 @@ export default class PlantState {
   plant4: string;
 
   constructor(id: number, startTime: Date, plantNames: string) {
-    console.log(plantNames);
     this.id = id;
     this.startTime = moment(startTime);
     this.plant1 = JSON.parse(plantNames)['plant1'];
