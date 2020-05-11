@@ -5,6 +5,7 @@ import { Row, Col, Button, Modal, Form } from 'react-bootstrap';
 import { PlantGraphic } from './PlantGraphic';
 import VentData from '../../models/VentData';
 import { apiRequestOptions } from '../../shared';
+import moment from 'moment';
 
 interface State {
   plantState: PlantState | null;
@@ -53,18 +54,31 @@ export class PlantComponent extends React.Component<Props, State> {
     });
   };
 
-  handleSubmit = async () => {
+  handleSubmit = () => {
     const ps = this.state.plantState!;
 
     const urlData = `?id=${ps.id}&startTime=${ps.startTime.toDate().toISOString()}&plantNames=${encodeURI(ps.serializePlantNames())}`;
 
-    await fetch(`${process.env.REACT_APP_API_HOST}/plant/update${urlData}`, {
+    fetch(`${process.env.REACT_APP_API_HOST}/plant/update${urlData}`, {
       method: 'POST',
       headers: new Headers({
         'Authorization': process.env.REACT_APP_API_KEY as string,
         'Content-Type': 'application/x-www-form-urlencoded'
       }),
-    });
+    }).then(() => this.handleClose())
+  };
+
+  startNewPlantState = async () => {
+    const urlData = `?plantNames=${encodeURI(PlantState.defaultPlantNames())}`;
+
+    fetch(`${process.env.REACT_APP_API_HOST}/plant/create${urlData}`, {
+      method: 'POST',
+      headers: new Headers({
+        'Authorization': process.env.REACT_APP_API_KEY as string,
+        'Content-Type': 'application/x-www-form-urlencoded'
+      }),
+    }).then(response => response.json()).then(data => console.log(data));
+    // TODO update state based on newly created state
   };
 
   renderGrowthProgramInfo = () => {
@@ -145,9 +159,18 @@ export class PlantComponent extends React.Component<Props, State> {
 
         <PlantGraphic plantState={this.state.plantState} ventData={this.props.ventData} />
 
-        <div className="nw-button" onClick={this.handleShow}>
-          <span className="jam jam-cog" />
-        </div>
+        <Row>
+          <Col md={{ span: 2, offset: 4 }}>
+            <div className="nw-button" onClick={this.handleShow}>
+              <span className="jam jam-pencil" />
+            </div>
+          </Col>
+          <Col md={{ span: 2 }}>
+            <div className="nw-button">
+              <span className="jam jam-plus-circle" onClick={this.startNewPlantState} />
+            </div>
+          </Col>
+        </Row>
       </div>
     );
   };

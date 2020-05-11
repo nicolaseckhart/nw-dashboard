@@ -47,4 +47,8 @@ export default class PlantState {
   serializePlantNames(): string {
     return `{"plant1":"${this.plant1}","plant2":"${this.plant2}","plant3":"${this.plant3}","plant4":"${this.plant4}"}`;
   }
+
+  static defaultPlantNames(): string {
+    return '{"plant1":"Plant 1","plant2":"Plant 2","plant3":"Plant 3","plant4":"Plant 4"}'
+  }
 }
