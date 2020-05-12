@@ -324,35 +324,38 @@
     color: $red;
   }
 
+  .service-online,
+  .service-offline,
+  .service-problem {
+    &:before {
+      display: inline-block;
+      content: '';
+      height: 0.75rem;
+      width: 0.75rem;
+      border-radius: 1em;
+    }
+  }
 
   .service-online:before {
-    display: inline-block;
-    content: '';
-    height: 0.75rem;
-    width: 0.75rem;
-    margin-right: 1em;
-    border-radius: 1em;
     background-color: $green;
   }
 
   .service-offline:before {
-    display: inline-block;
-    content: '';
-    height: 0.75rem;
-    width: 0.75rem;
-    margin-right: 1em;
-    border-radius: 1em;
     background-color: $red;
   }
 
   .service-problem:before {
-    display: inline-block;
-    content: '';
-    height: 0.75rem;
-    width: 0.75rem;
-    margin-right: 1em;
-    border-radius: 1em;
     background-color: $orange;
+  }
+
+  .dropdown-menu {
+    .service-online,
+    .service-offline,
+    .service-problem {
+      &:before {
+        margin-right: 1em;
+      }
+    }
   }
 
   .history-card {

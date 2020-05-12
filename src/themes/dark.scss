@@ -62,8 +62,8 @@
     display: flex;
   }
 
+  // Body & global styles
 
-  // Body
   background-color: $dark;
   font-family: 'Open Sans', sans-serif;
 
@@ -101,6 +101,7 @@
     background-color: $dark;
     border: .04rem solid $whitesmoke;
     border-radius: 0;
+    right: 0;
   }
 
   .dropdown-header {
@@ -143,9 +144,21 @@
     color: $whitesmoke;
   }
 
+  .modal-header {
+    border-bottom: none;
+
+    .close {
+      color: white;
+    }
+  }
+
   .modal-content {
     background-color: $dark;
     color: $whitesmoke;
+  }
+
+  .modal-footer {
+    border-top: none;
   }
 
   .btn-primary {
@@ -242,20 +255,20 @@
   }
 
   .btn-round {
-    background-color: $dark;
+    background-color: $dark !important;
     border-radius: 50%;
     height: 3rem;
     transition: border 500ms, background-color 500ms;
     width: 3rem;
     border: 1px solid $whitesmoke;
 
-    &:hover {
-      background-color: $dark;
-      border: 0.35rem solid $whitesmoke;
+    &:hover, &:focus, &:active {
+      background-color: $dark !important;
+      border: 0.35rem solid $whitesmoke !important;
     }
 
     &:disabled {
-      background-color: transparent;
+      background-color: transparent !important;
       border: 0.15rem dashed $whitesmoke;
       cursor: default;
     }
@@ -285,34 +298,38 @@
     }
   }
 
+  .service-online,
+  .service-offline,
+  .service-problem {
+    &:before {
+      display: inline-block;
+      content: '';
+      height: 0.75rem;
+      width: 0.75rem;
+      border-radius: 1em;
+    }
+  }
+
   .service-online:before {
-    display: inline-block;
-    content: '';
-    height: 0.75rem;
-    width: 0.75rem;
-    margin-right: 1em;
-    border-radius: 1em;
     background-color: $green;
   }
 
   .service-offline:before {
-    display: inline-block;
-    content: '';
-    height: 0.75rem;
-    width: 0.75rem;
-    margin-right: 1em;
-    border-radius: 1em;
     background-color: $red;
   }
 
   .service-problem:before {
-    display: inline-block;
-    content: '';
-    height: 0.75rem;
-    width: 0.75rem;
-    margin-right: 1em;
-    border-radius: 1em;
     background-color: $orange;
+  }
+
+  .dropdown-menu {
+    .service-online,
+    .service-offline,
+    .service-problem {
+      &:before {
+        margin-right: 1em;
+      }
+    }
   }
 
   .history-card {

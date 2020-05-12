@@ -1,5 +1,17 @@
 import React from 'react';
-import { Modal, Button } from 'react-bootstrap';
+import { Link } from 'react-router-dom';
+import { Modal, Button, Nav } from 'react-bootstrap';
+
+export function navItem(linkTo: string, text: string, icon: string) {
+  return (
+    <Link to={linkTo}>
+      <Nav.Item className="mr-5">
+        {text}
+        <span className={`jam jam-${icon} ml-2`} />
+      </Nav.Item>
+    </Link>
+  );
+}
 
 export function renderModal(
   shownState: boolean,

@@ -8,12 +8,13 @@ interface Props {
   eventLogData: EventLogData | null;
 }
 
-export const EventOverview: React.FC<Props> = ({ eventLogData }: Props) => {
+export const EventHistory: React.FC<Props> = ({ eventLogData }: Props) => {
   return (
     <div className="mt-5">
+      <h1 className="display-4">Event History</h1>
       {eventLogData !== null ? (
         <>
-          <Table striped bordered hover variant="dark">
+          <Table striped bordered hover variant="dark" className="my-4">
             <thead>
               <tr>
                 <th>Time</th>
