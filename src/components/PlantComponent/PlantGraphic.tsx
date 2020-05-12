@@ -328,19 +328,19 @@ C712.49,343.55,713.98,350.15,714.05,350.43z"
         {ventData.findVentState('bypass')}
       </text>
       <rect x="488.42" y="233.6" className="st15" width="96.77" height="30.11" />
-      <text transform="matrix(1 0 0 1 488.4166 242.1939)" className="st19 plant-labels">
+      <text x="536.805" y="248.655" dominantBaseline="middle" textAnchor="middle" className="st19 plant-labels">
         {plantState.plant1}
       </text>
-      <rect x="667.95" y="232.96" className="st15" width="96.77" height="30.11" />
-      <text transform="matrix(1 0 0 1 667.9504 241.5551)" className="st19 plant-labels">
+      <rect x="660.95" y="232.96" className="st15" width="96.77" height="30.11" />
+      <text x="709.335" y="248.015" dominantBaseline="middle" textAnchor="middle" className="st19 plant-labels">
         {plantState.plant2}
       </text>
       <rect x="487.99" y="400.59" className="st15" width="96.77" height="30.11" />
-      <text transform="matrix(1 0 0 1 487.9866 409.1802)" className="st19 plant-labels">
+      <text x="536.375" y="415.645" dominantBaseline="middle" textAnchor="middle" className="st19 plant-labels">
         {plantState.plant3}
       </text>
       <rect x="659.97" y="401.85" className="st15" width="96.77" height="30.11" />
-      <text transform="matrix(1 0 0 1 659.965 410.4385)" className="st19 plant-labels">
+      <text x="708.355" y="416.905" dominantBaseline="middle" textAnchor="middle" className="st19 plant-labels">
         {plantState.plant4}
       </text>
     </svg>

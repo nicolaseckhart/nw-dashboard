@@ -143,6 +143,27 @@
     color: $whitesmoke;
   }
 
+  .modal-content {
+    background-color: $dark;
+    color: $whitesmoke;
+  }
+
+  .btn-primary {
+    background-color: $lightgreen !important;
+    border: none;
+    outline: none;
+
+    &:focus, &:hover, &:active {
+      background-color: darken($lightgreen, 5%) !important;
+      border: none;
+      outline: none;
+    }
+
+    &:active {
+      background-color: darken($lightgreen, 15%) !important;
+    }
+  }
+
   // Application styles
 
   .text-light {

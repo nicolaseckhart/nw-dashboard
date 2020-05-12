@@ -1,9 +1,16 @@
+/**
+ * Provides fetch options for a GET request to the API
+ */
 export const apiRequestOptions = {
   headers: new Headers({
     Authorization: process.env.REACT_APP_API_KEY as string,
   }),
 };
 
+/**
+ * Provides fetch options for a POST request to the API
+ * @param body - x-www-form-urlencoded parameters
+ */
 export const apiPostRequestOptions = (body: any) => {
   return {
     method: 'POST',
@@ -11,18 +18,17 @@ export const apiPostRequestOptions = (body: any) => {
       Authorization: process.env.REACT_APP_API_KEY as string,
       'Content-Type': 'application/x-www-form-urlencoded',
     }),
-    body
-  }
+    body,
+  };
 };
 
 /**
- * Takes an array of key value parts that are uri encoded.
+ * Takes an array of key value parts that are x-www-form-urlencoded.
  * @param parts - [{id: 0}, {name: 'foobar}, {text: 'lorem'}, ...]
  */
 export const uriEncode = (parts: {}[]) => {
-  return parts.map((part: {}) => (
-    `${encodeURIComponent(Object.keys(part)[0])}=${encodeURIComponent(Object.values(part)[0] as any)}`
-  )).join('&');
+  const encodePart = (key: string, value: string) => `${encodeURIComponent(key)}=${encodeURIComponent(value)}`;
+  return parts.map((part: {}) => encodePart(Object.keys(part)[0], Object.values(part)[0] as any)).join('&');
 };
 
 /**
