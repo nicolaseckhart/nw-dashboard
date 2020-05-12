@@ -18,6 +18,7 @@ import { PlantComponent } from './components/PlantComponent/PlantComponent';
 import VentData from './models/VentData';
 import EventLogData from './models/EventLogData';
 import * as UiHelper from './shared/ui-helper';
+import { PumpComponent } from './components/PumpComponent/PumpComponent';
 
 interface State {
   sensorData: SensorData;
@@ -148,6 +149,7 @@ export class App extends React.Component<{}, State> {
               {UiHelper.navItem('/history/intakecoolant/day', 'History', 'history')}
               {UiHelper.navItem('/webcams', 'Webcams', 'camera-alt')}
               {UiHelper.navItem('/mining', 'Mining', 'coin')}
+              {UiHelper.navItem('/pumps', 'Pump Control', 'flask')}
             </Nav>
 
             <Link to="/events">
@@ -221,6 +223,9 @@ export class App extends React.Component<{}, State> {
             <Route exact path="/history/:sensor/:scope" component={SensorHistory} />
             <Route exact path="/webcams">
               <WebcamOverview webcamData={this.state.webcamData} />
+            </Route>
+            <Route exact path="/pumps">
+              <PumpComponent />
             </Route>
             <Route exact path="/events">
               <EventHistory eventLogData={this.state.eventLogData} />
