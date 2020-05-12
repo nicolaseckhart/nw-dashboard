@@ -1,7 +1,6 @@
 import { JsonMiningDump, MiningRig } from '../shared';
 
 export default class MiningData {
-  private static readonly AVAILABLE_CARDS = ['GPU0', 'GPU1', 'GPU2', 'GPU3'];
   rig: MiningRig;
 
   constructor(json: JsonMiningDump) {
@@ -14,7 +13,7 @@ export default class MiningData {
       totalHashRate: Number(json.total_hashrate_eth) + Number(json.total_hashrate_dcr),
       totalHashRateEth: Number(json.total_hashrate_eth),
       totalHashRateDcr: Number(json.total_hashrate_dcr),
-      graphicsCards: MiningData.AVAILABLE_CARDS.map((g: string, i: number) => {
+      graphicsCards: Object.keys(json.detailed_hashrates_eth).map((g: string, i: number) => {
         return {
           name: `Graphics Card ${i}`,
           identifier: g,

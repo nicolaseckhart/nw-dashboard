@@ -161,12 +161,7 @@ export interface JsonMiningDump {
   total_hashrate_eth: string;
   accepted_shares_eth: string;
   rejected_shares_eth: string;
-  detailed_hashrates_eth: {
-    GPU0: string;
-    GPU1: string;
-    GPU2: string;
-    GPU3: string;
-  };
+  detailed_hashrates_eth: object;
   total_hashrate_dcr: string;
   accepted_shares_dcr: string;
   rejected_shares_dcr: string;
