@@ -278,6 +278,11 @@
     margin-top: calc(50vh - 56px - 56px) !important;
   }
 
+  .webcam-card {
+    background-color: transparent;
+    border: none;
+  }
+
   .webcam-feed {
     div {
       @include pulse;
@@ -379,5 +384,10 @@
 
   .condition-alert {
     color: $red;
+  }
+
+  .event-card {
+    background-color: transparent;
+    border: none;
   }
 }

@@ -10,11 +10,11 @@ interface Props {
 
 export const EventHistory: React.FC<Props> = ({ eventLogData }: Props) => {
   return (
-    <div className="mt-5">
+    <div className="mt-5 card event-card">
       <h1 className="display-4">Event History</h1>
       {eventLogData !== null ? (
         <>
-          <Table striped bordered hover variant="dark" className="my-4">
+          <Table striped bordered hover variant="dark" className="my-4 event-table">
             <thead>
               <tr>
                 <th>Time</th>

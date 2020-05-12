@@ -15,16 +15,7 @@ interface Props {
   suggestedMax?: number;
 }
 
-export const SimpleLineChart: React.FC<Props> = ({
-  title,
-  labels,
-  data,
-  units,
-  scope,
-  accent,
-  suggestedMin,
-  suggestedMax,
-}: Props) => {
+export const SimpleLineChart: React.FC<Props> = ({ title, labels, data, units, scope, accent }: Props) => {
   const dataset = {
     labels: labels,
     datasets: [
@@ -70,7 +61,7 @@ export const SimpleLineChart: React.FC<Props> = ({
             zeroLineColor: 'rgb(211,211,211, 0.5)',
           },
           ticks: {
-            maxTicksLimit: 10,
+            maxTicksLimit: 5,
             fontColor: 'rgb(211,211,211)',
             callback: (value: string) => {
               return value + ' ' + units;

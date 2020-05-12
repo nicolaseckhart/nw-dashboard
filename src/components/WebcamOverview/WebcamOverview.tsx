@@ -20,8 +20,10 @@ export const WebcamOverview: React.FC<Props> = ({ webcamData }: Props) => {
       <Row>
         {webcamData.webcams.map((webcam: Webcam, index: number) => (
           <Col md={{ span: 6 }} key={webcam.identifier}>
-            {renderWebcamFeed(webcam.image)}
-            <h1 className="display-4 mt-5">Webcam {index + 1}</h1>
+            <div className="card webcam-card">
+              {renderWebcamFeed(webcam.image)}
+              <h1 className="display-4 mt-5">Webcam {index + 1}</h1>
+            </div>
           </Col>
         ))}
       </Row>

@@ -359,13 +359,20 @@
   }
 
   .history-card {
-    width: 80%;
-    //margin-left: 1rem;
-    //margin-right: 1rem;
+    &:first-child {
+      position: relative;
+      left: -1rem;
+    }
+
+    &:nth-child(2) {
+      position: relative;
+      right: -1rem;
+    }
   }
 
-  .plant-card {
-    height: 35rem;
+  .table-dark th, td {
+    background-color: mix(white, $dark-primary, 5%);
+    border: none;
   }
 
   .theme-button {
@@ -379,16 +386,13 @@
 
   .nw-button {
     @extend %elevation-4;
-
-    background-color: $accent-primary;
-    position: absolute;
-    padding: 0.1rem;
-    bottom: -2rem;
-    right: 1rem;
-    width: 3.9rem;
-    height: 3.9rem;
+    margin: -10rem auto 2rem;
+    width: 4rem;
+    height: 4rem;
     color: $whitesmoke;
     border-radius: 50%;
+    background-color: $accent-primary;
+    border: none;
     text-align: center;
     font-size: 2.6rem;
     transition: color ease .2s;
