@@ -146,7 +146,11 @@ export class PlantComponent extends React.Component<Props, State> {
 
         {this.renderPlantStateInfo()}
 
-        <PlantGraphic plantState={this.state.plantState} ventData={this.props.ventData} />
+        <Row>
+          <Col md={{ span: 12 }}>
+            <PlantGraphic plantState={this.state.plantState} ventData={this.props.ventData} />
+          </Col>
+        </Row>
 
         <Row>
           <Col md={{ span: 2, offset: 4 }}>{UiHelper.renderNwButton('pencil', this.openEditModal)}</Col>
