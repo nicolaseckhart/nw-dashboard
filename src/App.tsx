@@ -19,6 +19,7 @@ import VentData from './models/VentData';
 import EventLogData from './models/EventLogData';
 import * as UiHelper from './shared/ui-helper';
 import { PumpComponent } from './components/PumpComponent/PumpComponent';
+import ThemeManager from './models/ThemeManager';
 
 interface State {
   sensorData: SensorData;
@@ -33,6 +34,7 @@ interface State {
 
 export class App extends React.Component<{}, State> {
   socket: SocketIOClient.Socket;
+  themeManager: ThemeManager;
 
   constructor(props: {}) {
     super(props);
@@ -47,25 +49,19 @@ export class App extends React.Component<{}, State> {
       allServicesOnline: false,
     };
     this.socket = this.createSocket();
+    this.themeManager = new ThemeManager();
   }
 
   componentDidMount() {
     // Load debug data if in debug mode. Use this for development if the socket is down.
-    if (process.env.REACT_APP_DEBUG === 'true') {
-      this.setState({ sensorData: new SensorData(true) });
-    }
-    this.mountTheme();
+    if (process.env.REACT_APP_DEBUG === 'true') this.setState({ sensorData: new SensorData(true) });
+    this.themeManager.mountTheme();
     this.connectToSocket();
   }
 
   componentWillUnmount() {
     this.socket.close();
   }
-
-  mountTheme = () => {
-    const theme = localStorage.getItem('theme');
-    theme ? document.body.classList.add(theme) : document.body.classList.add('dark');
-  };
 
   createSocket = (): SocketIOClient.Socket => io(process.env.REACT_APP_WS_HOST as string);
 
@@ -75,6 +71,7 @@ export class App extends React.Component<{}, State> {
         username: process.env.REACT_APP_SOCKET_USER,
         password: process.env.REACT_APP_SOCKET_PASSWORD,
       });
+
       this.socket.on('authenticated', () => {
         this.socket.emit('get-user-list');
 
@@ -112,25 +109,8 @@ export class App extends React.Component<{}, State> {
     });
   };
 
-  handleServiceListOpen = () => {
-    this.setState({ isServiceListOpen: true });
-  };
-
-  handleServiceListClose = () => {
-    this.setState({ isServiceListOpen: false });
-  };
-
-  toggleTheme = () => {
-    const registeredThemes = ['dark', 'material-dark']; // TODO needs a better place
-
-    const currentTheme = localStorage.getItem('theme');
-    const themeIndex = registeredThemes.findIndex((theme) => theme === currentTheme);
-
-    const newTheme = registeredThemes[themeIndex + 1 >= registeredThemes.length ? 0 : themeIndex + 1];
-    document.body.classList.remove(currentTheme ? currentTheme : 'dark');
-    localStorage.setItem('theme', newTheme);
-    this.mountTheme();
-  };
+  handleServiceListOpen = () => this.setState({ isServiceListOpen: true });
+  handleServiceListClose = () => this.setState({ isServiceListOpen: false });
 
   render = () => (
     <Router>
@@ -203,7 +183,7 @@ export class App extends React.Component<{}, State> {
               </NavDropdown.Item>
             </NavDropdown>
             <Nav.Item className="mr-2">
-              <button className="jam jam-brightness theme-button" onClick={this.toggleTheme} />
+              <button className="jam jam-brightness theme-button" onClick={this.themeManager.toggleTheme} />
             </Nav.Item>
           </Navbar.Collapse>
         </Navbar>
