@@ -390,4 +390,49 @@
     background-color: transparent;
     border: none;
   }
+
+  .command-input {
+    .form-control {
+      border-radius: 0;
+
+      &:focus {
+        outline: none;
+        box-shadow: none;
+      }
+    }
+
+    .btn-outline-secondary {
+      border-radius: 0;
+      color: $lightgreen;
+      border-color: $lightgreen;
+
+      &:hover {
+        background-color: rgba($lightgreen, .2);
+      }
+    }
+  }
+
+  .command-preset {
+    font-family: Monaco, monospace;
+    width: 100%;
+    color: $whitesmoke;
+    margin-top: 1rem;
+    margin-bottom: 1rem;
+    border: .15rem dashed $whitesmoke;
+    text-align: center;
+    padding: 1rem;
+    cursor: pointer;
+    transition: margin 300ms;
+
+    &:hover {
+      margin-top: .5rem;
+      margin-bottom: -0.5rem;
+    }
+  }
+
+  .reset-command {
+    font-family: 'Open Sans', sans-serif !important;
+    color: rgba($whitesmoke, .4);
+    border-color: rgba($whitesmoke, .4);
+  }
 }

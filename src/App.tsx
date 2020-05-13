@@ -18,7 +18,7 @@ import { PlantComponent } from './components/PlantComponent/PlantComponent';
 import VentData from './models/VentData';
 import EventLogData from './models/EventLogData';
 import * as UiHelper from './shared/ui-helper';
-import { PumpComponent } from './components/PumpComponent/PumpComponent';
+import { CommandComponent } from './components/CommandComponent/CommandComponent';
 import ThemeManager from './models/ThemeManager';
 
 interface State {
@@ -123,17 +123,17 @@ export class App extends React.Component<{}, State> {
           <Link to="/">
             <Navbar.Brand>
               NW Dashboard
-              <span className="jam jam-dashboard ml-2 mr-3" />
+              <span className="jam jam-leaf ml-2 mr-3" />
             </Navbar.Brand>
           </Link>
           <Navbar.Toggle aria-controls="navigation" />
           <Navbar.Collapse id="navigation">
             <Nav className="mr-auto">
-              {UiHelper.navItem('/plants', 'Plants', 'leaf')}
+              {UiHelper.navItem('/plants', 'Plants', 'branch')}
               {UiHelper.navItem('/history/intakecoolant/day', 'History', 'history')}
               {UiHelper.navItem('/webcams', 'Webcams', 'camera-alt')}
               {UiHelper.navItem('/mining', 'Mining', 'coin')}
-              {UiHelper.navItem('/pumps', 'Pump Control', 'flask')}
+              {UiHelper.navItem('/commands', 'Commands', 'dashboard')}
             </Nav>
 
             <Link to="/events">
@@ -208,8 +208,8 @@ export class App extends React.Component<{}, State> {
             <Route exact path="/webcams">
               <WebcamOverview webcamData={this.state.webcamData} />
             </Route>
-            <Route exact path="/pumps">
-              <PumpComponent commandFn={this.executeCommand} />
+            <Route exact path="/commands">
+              <CommandComponent commandFn={this.executeCommand} />
             </Route>
             <Route exact path="/events">
               <EventHistory eventLogData={this.state.eventLogData} />
