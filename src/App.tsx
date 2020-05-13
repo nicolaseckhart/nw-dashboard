@@ -109,6 +109,10 @@ export class App extends React.Component<{}, State> {
     });
   };
 
+  executeCommand = (command: string) => {
+    this.socket.emit('nwmon-com', command);
+  };
+
   handleServiceListOpen = () => this.setState({ isServiceListOpen: true });
   handleServiceListClose = () => this.setState({ isServiceListOpen: false });
 
@@ -205,7 +209,7 @@ export class App extends React.Component<{}, State> {
               <WebcamOverview webcamData={this.state.webcamData} />
             </Route>
             <Route exact path="/pumps">
-              <PumpComponent />
+              <PumpComponent commandFn={this.executeCommand} />
             </Route>
             <Route exact path="/events">
               <EventHistory eventLogData={this.state.eventLogData} />
