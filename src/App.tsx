@@ -20,6 +20,8 @@ import EventLogData from './models/EventLogData';
 import * as UiHelper from './shared/ui-helper';
 import { CommandComponent } from './components/CommandComponent/CommandComponent';
 import ThemeManager from './models/ThemeManager';
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 interface State {
   sensorData: SensorData;
@@ -110,7 +112,11 @@ export class App extends React.Component<{}, State> {
   };
 
   executeCommand = (command: string) => {
-    this.socket.emit('nwmon-com', command);
+    this.socket.emit('nwmon-com', JSON.stringify({
+      type: command,
+      description: 'Manually triggered command by web user',
+    }));
+    toast.success('Command executed!', { position: 'bottom-center' });
   };
 
   handleServiceListOpen = () => this.setState({ isServiceListOpen: true });
@@ -217,6 +223,7 @@ export class App extends React.Component<{}, State> {
             <Route path="*" component={NotFound} />
           </Switch>
         </Container>
+        <ToastContainer />
       </div>
     </Router>
   );

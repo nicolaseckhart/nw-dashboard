@@ -28,6 +28,7 @@ export class CommandComponent extends React.Component<Props, State> {
   executeCommand = () => {
     if (this.state.command.length === 0) return;
     this.props.commandFn(this.state.command);
+    this.setState({ command: '' });
   };
 
   render = () => (
@@ -35,8 +36,8 @@ export class CommandComponent extends React.Component<Props, State> {
       <h1 className="display-4">Command Dashboard</h1>
 
       <Row className="my-3">
-        {commandPresets.map((command: string) => (
-          <Col md={{ span: 3 }}>
+        {commandPresets.map((command: string, index: number) => (
+          <Col md={{ span: 3 }} key={index}>
             <div className="command-preset" onClick={() => this.setCommand(command)}>{command}</div>
           </Col>
         ))}
@@ -55,7 +56,13 @@ export class CommandComponent extends React.Component<Props, State> {
           onChange={this.handleInputChange}
         />
         <InputGroup.Append>
-          <Button variant="outline-secondary" onClick={this.executeCommand}>Execute</Button>
+          <Button
+            variant="outline-secondary"
+            onClick={this.executeCommand}
+            disabled={this.state.command.length === 0}
+          >
+            Execute
+          </Button>
         </InputGroup.Append>
       </InputGroup>
     </div>

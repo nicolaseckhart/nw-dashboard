@@ -418,8 +418,14 @@
       color: $lightgreen;
       border-color: $lightgreen;
 
-      &:hover {
+      &:not([disabled]):hover {
         background-color: rgba($lightgreen, .2);
+      }
+
+      &:disabled {
+        color: $lightgray;
+        border-color: $lightgray;
+        cursor: not-allowed;
       }
     }
   }
