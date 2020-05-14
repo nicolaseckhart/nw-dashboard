@@ -205,7 +205,7 @@ export class App extends React.Component<{}, State> {
               <WeatherSummary />
             </Route>
             <Route exact path="/plants">
-              <PlantComponent ventData={this.state.ventData} />
+              <PlantComponent ventData={this.state.ventData} sensorData={this.state.sensorData} />
             </Route>
             <Route exact path="/mining">
               <MiningOverview miningData={this.state.miningData} />

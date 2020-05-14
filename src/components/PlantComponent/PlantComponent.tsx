@@ -1,11 +1,12 @@
 import * as React from 'react';
 import PlantState from '../../models/PlantState';
 import GrowthProgram from '../../models/GrowthProgram';
-import { Row, Col, Form } from 'react-bootstrap';
+import { Col, Form, Row } from 'react-bootstrap';
 import { PlantGraphic } from './PlantGraphic';
 import VentData from '../../models/VentData';
 import { apiPostRequestOptions, apiRequestOptions, uriEncode } from '../../shared';
 import * as UiHelper from '../../shared/ui-helper';
+import SensorData from '../../models/SensorData';
 
 interface State {
   plantState: PlantState | null;
@@ -14,6 +15,7 @@ interface State {
 
 interface Props {
   ventData: VentData;
+  sensorData: SensorData;
 }
 
 export class PlantComponent extends React.Component<Props, State> {
@@ -120,6 +122,13 @@ export class PlantComponent extends React.Component<Props, State> {
 
   renderCreateModalBody = () => <p>Are you sure you want to start a new cycle?</p>;
 
+  findSensorTemperatureMeasurement = (identifier: string) => {
+    const sensor = this.props.sensorData.sensors.find((s) => s.identifier === identifier);
+    if (sensor) {
+      return sensor.data.find((m) => m.name === 'Temperature');
+    }
+  };
+
   render = () => {
     if (!this.state.plantState) return null;
     return (
@@ -148,7 +157,13 @@ export class PlantComponent extends React.Component<Props, State> {
 
         <Row>
           <Col md={{ span: 12 }}>
-            <PlantGraphic plantState={this.state.plantState} ventData={this.props.ventData} />
+            <PlantGraphic
+              plantState={this.state.plantState}
+              ventData={this.props.ventData}
+              coolantTemp={this.findSensorTemperatureMeasurement('intakecoolant')}
+              heatantTemp={this.findSensorTemperatureMeasurement('intakeheatant')}
+              tentTemp={this.findSensorTemperatureMeasurement('tent')}
+            />
           </Col>
         </Row>
 

@@ -1,13 +1,17 @@
 import * as React from 'react';
 import PlantState from '../../models/PlantState';
 import VentData from '../../models/VentData';
+import { SensorMeasurement } from '../../shared';
 
 interface Props {
   plantState: PlantState;
   ventData: VentData;
+  coolantTemp?: SensorMeasurement;
+  heatantTemp?: SensorMeasurement;
+  tentTemp?: SensorMeasurement;
 }
 
-export const PlantGraphic: React.FC<Props> = ({ plantState, ventData }: Props) => (
+export const PlantGraphic: React.FC<Props> = ({ plantState, ventData, heatantTemp, coolantTemp, tentTemp }: Props) => (
   <div className="plant-svg">
     <svg version="1.1" x="0px" y="0px" viewBox="0 0 707 366">
       <g id="Fill">
@@ -134,15 +138,15 @@ export const PlantGraphic: React.FC<Props> = ({ plantState, ventData }: Props) =
         </text>
         <rect x="25" y="124.21" className="st9" width="33" height="8.79" />
         <text transform="matrix(1 0 0 1 30.9185 132.021)" className=" all-text labels">
-          10°C
+          {coolantTemp?.value} {coolantTemp?.unit}
         </text>
         <rect x="216.11" y="288.75" className="st9" width="33" height="8.79" />
         <text transform="matrix(1 0 0 1 222.0279 296.5588)" className=" all-text labels">
-          45°C
+          {heatantTemp?.value} {heatantTemp?.unit}
         </text>
         <rect x="567.12" y="21.63" className="st9" width="33" height="8.79" />
-        <text transform="matrix(1 0 0 1 573.037 29.4395)" className=" all-text labels">
-          28°C
+        <text transform="matrix(1 0 0 1 563.037 29.4395)" className=" all-text labels">
+          {tentTemp?.value} {tentTemp?.unit}
         </text>
       </g>
       <g id="Plants">
