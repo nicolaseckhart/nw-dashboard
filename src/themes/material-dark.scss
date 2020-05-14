@@ -12,7 +12,7 @@
   $black: #000;
   $red: #be0000;
   $blue: #0000be;
-  $lightgreen: #32cd32;
+  $lightgreen: #2cac2c;
   $green: #00be00;
   $lightblue: #1e90ff;
   $loading-bg: #f5f4e0;
@@ -169,18 +169,18 @@
   }
 
   .btn-primary {
-    background-color: $lightgreen !important;
+    background-color: $accent-primary !important;
     border: none;
     outline: none;
 
     &:focus, &:hover, &:active {
-      background-color: darken($lightgreen, 5%) !important;
+      background-color: darken($accent-primary, 5%) !important;
       border: none;
       outline: none;
     }
 
     &:active {
-      background-color: darken($lightgreen, 15%) !important;
+      background-color: darken($accent-primary, 15%) !important;
     }
   }
 
@@ -337,7 +337,7 @@
   }
 
   .service-online:before {
-    background-color: $green;
+    background-color: $lightgreen;
   }
 
   .service-offline:before {
@@ -407,16 +407,17 @@
 
   .command-input {
     .form-control {
-      border-radius: 0;
+      background-color: $dark-primary;
+      color: $whitesmoke;
 
       &:focus {
+        border-color: $accent-primary;
         outline: none;
         box-shadow: none;
       }
     }
 
     .btn-outline-secondary {
-      border-radius: 0;
       color: $lightgreen;
       border-color: $lightgreen;
 
@@ -464,19 +465,19 @@
       margin-right: 0.5rem;
       transition: background-color ease 500ms;
       cursor: pointer;
-      background-color: $accent-primary;
-
+      background-color: mix(white, $dark-primary, 9%);
+      user-select: none;
     }
 
     .selected {
-      background-color: mix(white, $dark-primary, 9%);
-
+      background-color: $accent-primary;
     }
   }
 
   .command-card {
     margin-top: 2rem;
-    padding: 3rem;
+    padding-left: 2rem;
+    padding-right: 2rem;
   }
 }
 

@@ -449,6 +449,7 @@
       margin-right: 0.5rem;
       transition: background-color ease 500ms;
       cursor: pointer;
+      user-select: none
     }
 
     .selected {
