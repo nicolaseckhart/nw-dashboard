@@ -81,7 +81,7 @@ export class App extends React.Component<{}, State> {
         this.socket.on('nwmon_rig', (data: JsonSensorDumpRig) => {
           this.setState({
             sensorData: this.state.sensorData.update(data, 'rig'),
-            ventData: this.state.ventData.update(data.air),
+            ventData: this.state.ventData.update(data.air.vents),
           });
         });
 

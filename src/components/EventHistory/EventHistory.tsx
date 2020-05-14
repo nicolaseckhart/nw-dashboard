@@ -93,20 +93,20 @@ export class EventHistory extends React.Component<{}, State> {
 
           <Table striped bordered hover variant="dark" className="my-4 event-table">
             <thead>
-              <tr>
-                <th>Time</th>
-                <th>Device</th>
-                <th>Description</th>
-              </tr>
+            <tr>
+              <th>Time</th>
+              <th>Device</th>
+              <th>Description</th>
+            </tr>
             </thead>
             <tbody>
-              {this.state.filteredEventLog!.map((event: EventLogEntry, index: number) => (
-                <tr key={index}>
-                  <td>{event.readableTimestamp()}</td>
-                  <td align="right">{event.device}</td>
-                  <td align="right">{event.description}</td>
-                </tr>
-              ))}
+            {this.state.filteredEventLog!.map((event: EventLogEntry, index: number) => (
+              <tr key={index}>
+                <td>{event.readableTimestamp()}</td>
+                <td align="right">{event.device}</td>
+                <td align="right">{event.description}</td>
+              </tr>
+            ))}
             </tbody>
           </Table>
         </>
