@@ -138,22 +138,6 @@ export interface JsonWebcamDump {
   cam1?: string;
 }
 
-export interface PlantEvent {
-  time: string;
-  device: string;
-  description: string;
-}
-
-export interface JsonPlantEvent {
-  time: string;
-  device: string;
-  description: string;
-}
-
-export interface JsonEventLogDump {
-  events: PlantEvent[];
-}
-
 export interface JsonMiningDump {
   id: number;
   miner_version: string;

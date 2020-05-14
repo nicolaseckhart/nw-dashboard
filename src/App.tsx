@@ -16,7 +16,6 @@ import { EventHistory } from './components/EventHistory/EventHistory';
 import WeatherSummary from './components/WeatherSummary/WeatherSummary';
 import { PlantComponent } from './components/PlantComponent/PlantComponent';
 import VentData from './models/VentData';
-import EventLogData from './models/EventLogData';
 import * as UiHelper from './shared/ui-helper';
 import { CommandComponent } from './components/CommandComponent/CommandComponent';
 import ThemeManager from './models/ThemeManager';
@@ -28,7 +27,6 @@ interface State {
   webcamData: WebcamData;
   ventData: VentData;
   miningData: MiningData | null;
-  eventLogData: EventLogData | null;
   serviceStates: WSUpdateData;
   isServiceListOpen: boolean;
   allServicesOnline: boolean;
@@ -45,7 +43,6 @@ export class App extends React.Component<{}, State> {
       webcamData: new WebcamData(),
       ventData: new VentData(),
       miningData: null,
-      eventLogData: new EventLogData(),
       isServiceListOpen: false,
       serviceStates: new WSUpdateData(),
       allServicesOnline: false,
@@ -218,7 +215,7 @@ export class App extends React.Component<{}, State> {
               <CommandComponent commandFn={this.executeCommand} />
             </Route>
             <Route exact path="/events">
-              <EventHistory eventLogData={this.state.eventLogData} />
+              <EventHistory />
             </Route>
             <Route path="*" component={NotFound} />
           </Switch>
