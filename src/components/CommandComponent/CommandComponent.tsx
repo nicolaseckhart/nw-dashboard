@@ -11,7 +11,7 @@ interface Props {
 
 const commandPresets: string[] = [
   'VENT_HEAT_OPEN', 'VENT_HEAT_CLOSE', 'VENT_COOL_OPEN', 'VENT_COOL_CLOSE', 'VENT_BYPASS_OPEN', 'VENT_BYPASS_CLOSE',
-  'PUMP_BLOOM_X', 'PUMP_MICRO_X', 'PUMP_GROW_X', 'PUMP_PH_UP_X', 'PUMP_PH_DOWN_X',
+  'PUMP_BLOOM_X', 'PUMP_MICRO_X', 'PUMP_GROW_X', 'PUMP_PHUP_X', 'PUMP_PHDOWN_X',
 ];
 
 export class CommandComponent extends React.Component<Props, State> {
