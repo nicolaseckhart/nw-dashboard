@@ -386,7 +386,9 @@
 
   .nw-button {
     @extend %elevation-4;
-    margin: 0 auto 2rem;
+    margin: 0 auto 1rem;
+    padding-top: 0.2rem;
+    padding-left: 0.1rem;
     width: 4rem;
     height: 4rem;
     color: $whitesmoke;
@@ -452,6 +454,29 @@
     font-family: 'Open Sans', sans-serif !important;
     color: rgba($whitesmoke, .4);
     border-color: rgba($whitesmoke, .4);
+  }
+
+  .event-filters {
+    .badge-pill {
+      color: $whitesmoke;
+      padding: 0.75rem 1.5rem;
+      font-size: 1rem;
+      margin-right: 0.5rem;
+      transition: background-color ease 500ms;
+      cursor: pointer;
+      background-color: $accent-primary;
+
+    }
+
+    .selected {
+      background-color: mix(white, $dark-primary, 9%);
+
+    }
+  }
+
+  .command-card {
+    margin-top: 2rem;
+    padding: 3rem;
   }
 }
 

@@ -44,36 +44,42 @@ export class CommandComponent extends React.Component<Props, State> {
     <div className="mt-5">
       <h1 className="display-4">Command Dashboard</h1>
 
-      <Row className="my-3">
-        {commandPresets.map((command: string, index: number) => (
-          <Col md={{ span: 3 }} key={index}>
-            <div className="command-preset" onClick={() => this.setCommand(command)}>
-              {command}
+      <div className="card command-card">
+        <Row className="my-3">
+          {commandPresets.map((command: string, index: number) => (
+            <Col md={{ span: 3 }} key={index}>
+              <div className="command-preset" onClick={() => this.setCommand(command)}>
+                {command}
+              </div>
+            </Col>
+          ))}
+
+          <Col md={{ span: 3 }}>
+            <div className="command-preset reset-command" onClick={() => this.setCommand('')}>
+              CLEAR COMMAND
             </div>
           </Col>
-        ))}
+        </Row>
 
-        <Col md={{ span: 3 }}>
-          <div className="command-preset reset-command" onClick={() => this.setCommand('')}>
-            CLEAR COMMAND
-          </div>
-        </Col>
-      </Row>
-
-      <InputGroup size="lg" className="command-input my-2">
-        <FormControl
-          placeholder="Command"
-          aria-label="Command"
-          aria-describedby="basic-addon2"
-          value={this.state.command}
-          onChange={this.handleInputChange}
-        />
-        <InputGroup.Append>
-          <Button variant="outline-secondary" onClick={this.executeCommand} disabled={this.state.command.length === 0}>
-            Execute
-          </Button>
-        </InputGroup.Append>
-      </InputGroup>
+        <InputGroup size="lg" className="command-input my-2">
+          <FormControl
+            placeholder="Command"
+            aria-label="Command"
+            aria-describedby="basic-addon2"
+            value={this.state.command}
+            onChange={this.handleInputChange}
+          />
+          <InputGroup.Append>
+            <Button
+              variant="outline-secondary"
+              onClick={this.executeCommand}
+              disabled={this.state.command.length === 0}
+            >
+              Execute
+            </Button>
+          </InputGroup.Append>
+        </InputGroup>
+      </div>
     </div>
   );
 }
