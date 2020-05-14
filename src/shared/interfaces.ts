@@ -112,7 +112,9 @@ export interface JsonVentDump {
 }
 
 export interface JsonSensorDumpRig {
-  air: JsonVentDump;
+  air: {
+    vents: JsonVentDump;
+  };
   water: {
     temperature: number;
     level: string;

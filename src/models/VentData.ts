@@ -12,8 +12,7 @@ export default class VentData {
   }
 
   update(json: JsonVentDump): VentData {
-    const ventOpen = (stringState: string) => stringState === 'open';
-
+    const ventOpen = (stringState: string) => stringState.toLowerCase() === 'open';
     this.vents = [
       { name: 'bypass', open: ventOpen(json.bypass) },
       { name: 'coolant', open: ventOpen(json.coolant) },

@@ -12,8 +12,8 @@ export class EventHistory extends React.Component<{}, State> {
   constructor(props: {}) {
     super(props);
     this.state = {
-      eventLog: null
-    }
+      eventLog: null,
+    };
   }
 
   componentDidMount() {
@@ -22,8 +22,8 @@ export class EventHistory extends React.Component<{}, State> {
 
   fetchEventHistory = () => {
     fetch(`${process.env.REACT_APP_API_HOST}/events/50`, apiRequestOptions)
-      .then(response => response.json())
-      .then(response => {
+      .then((response) => response.json())
+      .then((response) => {
         this.setState({
           eventLog: response.map((record: any) => {
             return new EventLogEntry(record['time'], record['device'], record['description']);
@@ -39,24 +39,26 @@ export class EventHistory extends React.Component<{}, State> {
         <>
           <Table striped bordered hover variant="dark" className="my-4 event-table">
             <thead>
-            <tr>
-              <th>Time</th>
-              <th>Device</th>
-              <th>Description</th>
-            </tr>
+              <tr>
+                <th>Time</th>
+                <th>Device</th>
+                <th>Description</th>
+              </tr>
             </thead>
             <tbody>
-            {this.state.eventLog.map((event: EventLogEntry, index: number) => (
-              <tr key={index}>
-                <td>{event.timestamp}</td>
-                <td align="right">{event.device}</td>
-                <td align="right">{event.description}</td>
-              </tr>
-            ))}
+              {this.state.eventLog.map((event: EventLogEntry, index: number) => (
+                <tr key={index}>
+                  <td>{event.timestamp}</td>
+                  <td align="right">{event.device}</td>
+                  <td align="right">{event.description}</td>
+                </tr>
+              ))}
             </tbody>
           </Table>
         </>
-      ) : <Loading />}
+      ) : (
+        <Loading />
+      )}
     </div>
   );
 }

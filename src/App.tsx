@@ -81,7 +81,7 @@ export class App extends React.Component<{}, State> {
         this.socket.on('nwmon_rig', (data: JsonSensorDumpRig) => {
           this.setState({
             sensorData: this.state.sensorData.update(data, 'rig'),
-            ventData: this.state.ventData.update(data.air),
+            ventData: this.state.ventData.update(data.air.vents),
           });
         });
 
@@ -109,10 +109,13 @@ export class App extends React.Component<{}, State> {
   };
 
   executeCommand = (command: string) => {
-    this.socket.emit('nwmon-com', JSON.stringify({
-      type: command,
-      description: 'Manually triggered command by web user',
-    }));
+    this.socket.emit(
+      'nwmon-com',
+      JSON.stringify({
+        type: command,
+        description: 'Manually triggered command by web user',
+      }),
+    );
     toast.success('Command executed!', { position: 'bottom-center' });
   };
 

@@ -2,7 +2,7 @@ import React from 'react';
 import { Row, Col, InputGroup, Button, FormControl } from 'react-bootstrap';
 
 interface State {
-  command: string
+  command: string;
 }
 
 interface Props {
@@ -10,8 +10,17 @@ interface Props {
 }
 
 const commandPresets: string[] = [
-  'VENT_HEAT_OPEN', 'VENT_HEAT_CLOSE', 'VENT_COOL_OPEN', 'VENT_COOL_CLOSE', 'VENT_BYPASS_OPEN', 'VENT_BYPASS_CLOSE',
-  'PUMP_BLOOM_X', 'PUMP_MICRO_X', 'PUMP_GROW_X', 'PUMP_PHUP_X', 'PUMP_PHDOWN_X',
+  'VENT_HEAT_OPEN',
+  'VENT_HEAT_CLOSE',
+  'VENT_COOL_OPEN',
+  'VENT_COOL_CLOSE',
+  'VENT_BYPASS_OPEN',
+  'VENT_BYPASS_CLOSE',
+  'PUMP_BLOOM_X',
+  'PUMP_MICRO_X',
+  'PUMP_GROW_X',
+  'PUMP_PHUP_X',
+  'PUMP_PHDOWN_X',
 ];
 
 export class CommandComponent extends React.Component<Props, State> {
@@ -38,12 +47,16 @@ export class CommandComponent extends React.Component<Props, State> {
       <Row className="my-3">
         {commandPresets.map((command: string, index: number) => (
           <Col md={{ span: 3 }} key={index}>
-            <div className="command-preset" onClick={() => this.setCommand(command)}>{command}</div>
+            <div className="command-preset" onClick={() => this.setCommand(command)}>
+              {command}
+            </div>
           </Col>
         ))}
 
         <Col md={{ span: 3 }}>
-          <div className="command-preset reset-command" onClick={() => this.setCommand('')}>CLEAR COMMAND</div>
+          <div className="command-preset reset-command" onClick={() => this.setCommand('')}>
+            CLEAR COMMAND
+          </div>
         </Col>
       </Row>
 
@@ -56,11 +69,7 @@ export class CommandComponent extends React.Component<Props, State> {
           onChange={this.handleInputChange}
         />
         <InputGroup.Append>
-          <Button
-            variant="outline-secondary"
-            onClick={this.executeCommand}
-            disabled={this.state.command.length === 0}
-          >
+          <Button variant="outline-secondary" onClick={this.executeCommand} disabled={this.state.command.length === 0}>
             Execute
           </Button>
         </InputGroup.Append>
