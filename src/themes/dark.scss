@@ -441,4 +441,18 @@
     color: rgba($whitesmoke, .4);
     border-color: rgba($whitesmoke, .4);
   }
+
+  .event-filters {
+    .badge-pill {
+      padding: 0.75rem 1.5rem;
+      font-size: 1rem;
+      margin-right: 0.5rem;
+      transition: background-color ease 500ms;
+      cursor: pointer;
+    }
+
+    .selected {
+      background-color: $lightgreen;
+    }
+  }
 }
