@@ -5,8 +5,9 @@ import { Col, Form, Row } from 'react-bootstrap';
 import { PlantGraphic } from './PlantGraphic';
 import VentData from '../../models/VentData';
 import { apiPostRequestOptions, apiRequestOptions, uriEncode } from '../../shared';
-import * as UiHelper from '../../shared/ui-helper';
 import SensorData from '../../models/SensorData';
+import { FormModal } from '../UiComponents/FormModal';
+import { NwButton } from '../UiComponents/NwButton';
 
 interface State {
   plantState: PlantState | null;
@@ -133,25 +134,25 @@ export class PlantComponent extends React.Component<Props, State> {
     if (!this.state.plantState) return null;
     return (
       <div className="mt-5 card plant-card">
-        {UiHelper.renderModal(
-          this.state.modalsShown.edit,
-          'Edit Plant State',
-          'Submit',
-          this.updatePlantState,
-          'Cancel',
-          this.closeModals,
-          this.renderEditModalBody,
-        )}
+        <FormModal
+          shownState={this.state.modalsShown.edit}
+          title="Edit Plant State"
+          submitText="Submit"
+          submitFn={this.updatePlantState}
+          closeText="Cancel"
+          closeFn={this.closeModals}
+          renderBodyFn={this.renderEditModalBody}
+        />
 
-        {UiHelper.renderModal(
-          this.state.modalsShown.create,
-          'Confirmation',
-          'Confirm',
-          this.createPlantState,
-          'Cancel',
-          this.closeModals,
-          this.renderCreateModalBody,
-        )}
+        <FormModal
+          shownState={this.state.modalsShown.create}
+          title="Confirmation"
+          submitText="Confirm"
+          submitFn={this.createPlantState}
+          closeText="Cancel"
+          closeFn={this.closeModals}
+          renderBodyFn={this.renderCreateModalBody}
+        />
 
         {this.renderPlantStateInfo()}
 
@@ -168,8 +169,12 @@ export class PlantComponent extends React.Component<Props, State> {
         </Row>
 
         <Row>
-          <Col md={{ span: 2, offset: 4 }}>{UiHelper.renderNwButton('pencil', this.openEditModal)}</Col>
-          <Col md={{ span: 2 }}>{UiHelper.renderNwButton('plus-circle', this.openCreateModal)}</Col>
+          <Col md={{ span: 2, offset: 4 }}>
+            <NwButton icon="pencil" action={this.openEditModal} />
+          </Col>
+          <Col md={{ span: 2 }}>
+            <NwButton icon="plus-circle" action={this.openCreateModal} />
+          </Col>
         </Row>
       </div>
     );
