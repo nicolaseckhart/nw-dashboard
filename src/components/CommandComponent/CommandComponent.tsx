@@ -1,5 +1,7 @@
 import React from 'react';
-import { Row, Col, InputGroup, Button, FormControl } from 'react-bootstrap';
+import { CommandFilter } from './CommandFilter';
+import { Row, InputGroup, Button, FormControl } from 'react-bootstrap';
+import { Title } from '../UiComponents/Title';
 
 interface State {
   command: string;
@@ -42,23 +44,14 @@ export class CommandComponent extends React.Component<Props, State> {
 
   render = () => (
     <div className="mt-5">
-      <h1 className="display-4">Command Dashboard</h1>
+      <Title>Command Dashboard</Title>
 
       <div className="card command-card">
         <Row className="my-3">
           {commandPresets.map((command: string, index: number) => (
-            <Col md={{ span: 3 }} key={index}>
-              <div className="command-preset" onClick={() => this.setCommand(command)}>
-                {command}
-              </div>
-            </Col>
+            <CommandFilter key={index} name={command} action={() => this.setCommand(command)} />
           ))}
-
-          <Col md={{ span: 3 }}>
-            <div className="command-preset reset-command" onClick={() => this.setCommand('')}>
-              CLEAR COMMAND
-            </div>
-          </Col>
+          <CommandFilter name="CLEAR COMMAND" action={() => this.setCommand('')} resetFilter={true} />
         </Row>
 
         <InputGroup size="lg" className="command-input my-2">

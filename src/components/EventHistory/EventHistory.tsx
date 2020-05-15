@@ -3,6 +3,7 @@ import { Table, Badge } from 'react-bootstrap';
 import { Loading } from '../Loading/Loading';
 import EventLogEntry from '../../models/EventLogEntry';
 import { apiRequestOptions } from '../../shared';
+import { Title } from '../UiComponents/Title';
 
 type EventFilter = { name: string; filterPrefix: string; active: boolean };
 const eventLimit = 500;
@@ -86,7 +87,7 @@ export class EventHistory extends React.Component<{}, State> {
 
   render = () => (
     <div className="mt-5 card event-card">
-      <h1 className="display-4">Event History</h1>
+      <Title>Event History</Title>
       {this.state.eventLog !== null ? (
         <>
           {this.renderEventFilter()}

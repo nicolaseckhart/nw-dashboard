@@ -52,8 +52,6 @@ export class App extends React.Component<{}, State> {
   }
 
   componentDidMount() {
-    // Load debug data if in debug mode. Use this for development if the socket is down.
-    if (process.env.REACT_APP_DEBUG === 'true') this.setState({ sensorData: new SensorData(true) });
     this.themeManager.mountTheme();
     this.connectToSocket();
   }

@@ -4,6 +4,7 @@ import * as React from 'react';
 import { Loading } from '../Loading/Loading';
 import { Table } from 'react-bootstrap';
 import MiningData from '../../models/MiningData';
+import { Title } from '../UiComponents/Title';
 
 interface Props {
   miningData: MiningData | null;
@@ -16,9 +17,9 @@ export const MiningOverview: React.FC<Props> = ({ miningData }: Props) => {
     <div className="mt-5">
       {miningData !== null ? (
         <>
-          <h1 className="display-4">
+          <Title>
             Mining Rig #{miningData.rig.id} [{readableRate(miningData.rig.totalHashRate)}]
-          </h1>
+          </Title>
           <Row>
             {miningData.rig.graphicsCards.map((graphicsCard: GraphicsCard) => (
               <Col md={{ span: 4 }} className="my-3" key={graphicsCard.identifier}>

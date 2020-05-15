@@ -8,8 +8,8 @@ export default class SensorData {
   ];
   sensors: Sensor[];
 
-  constructor(debug = false) {
-    this.sensors = debug ? SensorData.DEBUG_DATA : [];
+  constructor() {
+    this.sensors = [];
   }
 
   environmentSensors(environment: 'air' | 'water'): Sensor[] {
@@ -180,17 +180,4 @@ export default class SensorData {
     }
     return 'alert' as Condition;
   }
-
-  private static readonly DEBUG_DATA: Sensor[] = [
-    ...SensorData.deserializeRigData(
-      JSON.parse(
-        '{"water":{"temperature":-127,"level":"Low","DO":{"value":6.51,"units":"mg/L"},"PH":{"voltage":0,"value":0.12,"units":""},"TDS":{"voltage":1.9,"value":813,"units":"ppm"}}}',
-      ),
-    ),
-    ...SensorData.deserializePiData(
-      JSON.parse(
-        '{"air":{"intake_coolant":{"temperature":"14.9","humidity":"50.4"},"intake_heatant":{"temperature":"0.0","humidity":"0.0"},"tent":{"temperature":"20.6","humidity":"34.5"}}}',
-      ),
-    ),
-  ];
 }
