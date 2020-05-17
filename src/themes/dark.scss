@@ -393,9 +393,13 @@
 
   .command-input {
     .form-control {
+      background-color: $dark2;
+      color: $whitesmoke;
+      border-color: $lightgray;
       border-radius: 0;
 
       &:focus {
+        border-color: $whitesmoke;
         outline: none;
         box-shadow: none;
       }

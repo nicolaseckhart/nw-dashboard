@@ -2,6 +2,7 @@ import { Col, Row } from 'react-bootstrap';
 import * as React from 'react';
 import WebcamData from '../../models/WebcamData';
 import { Webcam } from '../../shared';
+import { Title } from '../UiComponents/Title';
 
 interface Props {
   webcamData: WebcamData;
@@ -22,7 +23,7 @@ export const WebcamOverview: React.FC<Props> = ({ webcamData }: Props) => {
           <Col md={{ span: 6 }} key={webcam.identifier}>
             <div className="card webcam-card">
               {renderWebcamFeed(webcam.image)}
-              <h1 className="display-4 mt-5">Webcam {index + 1}</h1>
+              <Title>Webcam {index + 1}</Title>
             </div>
           </Col>
         ))}

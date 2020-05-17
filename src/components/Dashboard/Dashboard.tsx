@@ -4,6 +4,7 @@ import { SensorCard } from '../SensorCard/SensorCard';
 import * as React from 'react';
 import SensorData from '../../models/SensorData';
 import { Loading } from '../Loading/Loading';
+import { Title } from '../UiComponents/Title';
 
 interface Props {
   sensorData: SensorData;
@@ -15,7 +16,7 @@ export const Dashboard: React.FC<Props> = ({ sensorData }: Props) => (
       <>
         {SensorData.ENVIRONMENTS.map((environment) => (
           <div key={environment.identifier}>
-            <h1 className="display-4">{environment.title}</h1>
+            <Title>{environment.title}</Title>
             <Row>
               {sensorData.environmentSensors(environment.identifier).map((sensor: Sensor, index: number) => (
                 <SensorCard key={index} sensor={sensor} />

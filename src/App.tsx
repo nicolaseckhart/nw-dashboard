@@ -16,11 +16,11 @@ import { EventHistory } from './components/EventHistory/EventHistory';
 import WeatherSummary from './components/WeatherSummary/WeatherSummary';
 import { PlantComponent } from './components/PlantComponent/PlantComponent';
 import VentData from './models/VentData';
-import * as UiHelper from './shared/ui-helper';
 import { CommandComponent } from './components/CommandComponent/CommandComponent';
 import ThemeManager from './models/ThemeManager';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+import { NavItem } from './components/UiComponents/NavItem';
 
 interface State {
   sensorData: SensorData;
@@ -52,8 +52,6 @@ export class App extends React.Component<{}, State> {
   }
 
   componentDidMount() {
-    // Load debug data if in debug mode. Use this for development if the socket is down.
-    if (process.env.REACT_APP_DEBUG === 'true') this.setState({ sensorData: new SensorData(true) });
     this.themeManager.mountTheme();
     this.connectToSocket();
   }
@@ -135,11 +133,11 @@ export class App extends React.Component<{}, State> {
           <Navbar.Toggle aria-controls="navigation" />
           <Navbar.Collapse id="navigation">
             <Nav className="mr-auto">
-              {UiHelper.navItem('/plants', 'Plants', 'branch')}
-              {UiHelper.navItem('/history/intakecoolant/day', 'History', 'history')}
-              {UiHelper.navItem('/webcams', 'Webcams', 'camera-alt')}
-              {UiHelper.navItem('/mining', 'Mining', 'coin')}
-              {UiHelper.navItem('/commands', 'Commands', 'dashboard')}
+              <NavItem linkTo="/plants" text="Plants" icon="branch" />
+              <NavItem linkTo="/history/intakecoolant/day" text="History" icon="history" />
+              <NavItem linkTo="/webcams" text="Webcams" icon="camera-alt" />
+              <NavItem linkTo="/mining" text="Mining" icon="coin" />
+              <NavItem linkTo="/commands" text="Commands" icon="dashboard" />
             </Nav>
 
             <Link to="/events">

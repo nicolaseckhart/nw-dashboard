@@ -13,6 +13,7 @@ import {
 } from '../../shared';
 import { Link } from 'react-router-dom';
 import { Loading } from '../Loading/Loading';
+import { Title } from '../UiComponents/Title';
 
 interface State {
   historyGraphs: HistoryGraph[];
@@ -104,9 +105,9 @@ export class SensorHistory extends React.Component<RouteChildrenProps<HistoryNav
   };
 
   renderTitle = () => (
-    <h1 className="display-4 text-muted mt-5">
+    <Title margin>
       The <u>{this.historyApi.getSensorName()}</u> over the last <u>{this.historyApi.scope}</u>
-    </h1>
+    </Title>
   );
 
   renderScopeSelect = () => (
@@ -127,7 +128,7 @@ export class SensorHistory extends React.Component<RouteChildrenProps<HistoryNav
 
   renderSensorSelect = () => (
     <>
-      <h1 className="display-4 text-muted mt-5">Other sensors</h1>
+      <Title margin>Other sensors</Title>
       <Row className="mt-5">
         {this.historyApi.otherSensors().map((sensor: string) => (
           <Col className="mb-4 content-middle" key={sensor}>
