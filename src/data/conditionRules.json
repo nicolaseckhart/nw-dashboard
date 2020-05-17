@@ -30,6 +30,8 @@
     "warning_lb": 5
   },
   "water_tds": {
+    "warning_ub": 1700,
+    "good_ub": 1500,
     "good_lb": 550,
     "warning_lb": 300
   }
