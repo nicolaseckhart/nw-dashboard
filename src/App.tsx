@@ -5,7 +5,14 @@ import SensorData from './models/SensorData';
 import WebcamData from './models/WebcamData';
 import MiningData from './models/MiningData';
 import WSUpdateData from './models/WSUpdateData';
-import { JsonMiningDump, JsonSensorDumpPi, JsonSensorDumpRig, JsonWebcamDump, JsonWSUpdateDump } from './shared';
+import {
+  apiRequestOptions,
+  JsonMiningDump,
+  JsonSensorDumpPi,
+  JsonSensorDumpRig,
+  JsonWebcamDump,
+  JsonWSUpdateDump,
+} from './shared';
 import { BrowserRouter as Router, Switch, Route, Link } from 'react-router-dom';
 import { Dashboard } from './components/Dashboard/Dashboard';
 import { SensorHistory } from './components/SensorHistory/SensorHistory';
@@ -51,14 +58,27 @@ export class App extends React.Component<{}, State> {
     this.themeManager = new ThemeManager();
   }
 
-  componentDidMount() {
+  async componentDidMount() {
     this.themeManager.mountTheme();
     this.connectToSocket();
+    const initialWebcamData = await this.fetchWebcamData();
+    this.setState({ webcamData: this.state.webcamData.update({ cam0: initialWebcamData.cam0 }) });
+    this.setState({ webcamData: this.state.webcamData.update({ cam1: initialWebcamData.cam1 }) });
   }
 
   componentWillUnmount() {
     this.socket.close();
   }
+
+  fetchWebcamData = async () => {
+    const res0 = await fetch(`${process.env.REACT_APP_API_HOST}/cam/0/day`, apiRequestOptions);
+    const cam0 = await res0.json();
+
+    const res1 = await fetch(`${process.env.REACT_APP_API_HOST}/cam/1/day`, apiRequestOptions);
+    const cam1 = await res1.json();
+
+    return { cam0: cam0[0].data, cam1: cam1[0].data };
+  };
 
   createSocket = (): SocketIOClient.Socket => io(process.env.REACT_APP_WS_HOST as string);
 
