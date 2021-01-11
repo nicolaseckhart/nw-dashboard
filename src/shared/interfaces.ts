@@ -1,6 +1,6 @@
 export type CardAccent = 'red' | 'green' | 'blue' | 'lightblue' | 'pink' | 'yellow';
 export type SensorEnvironment = 'air' | 'water';
-export type SensorIdentifier = 'intakecoolant' | 'intakeheatant' | 'tent' | 'water' | 'do' | 'ph' | 'tds';
+export type SensorIdentifier = 'bloom_tent' | 'grow_tent' | 'heater' | 'room' | 'water' | 'do' | 'ph' | 'tds';
 export type HistoryScope = 'day' | 'week' | 'month' | 'year';
 export type WebcamIdentifier = 'cam0' | 'cam1';
 export type Condition = 'check' | 'triangle-danger' | 'alert';
@@ -90,15 +90,19 @@ export interface WSUpdate {
 
 export interface JsonSensorDumpPi {
   air: {
-    intake_coolant: {
+    bloom_tent: {
       temperature: string;
       humidity: string;
     };
-    intake_heatant: {
+    grow_tent: {
       temperature: string;
       humidity: string;
     };
-    tent: {
+    heater: {
+      temperature: string;
+      humidity: string;
+    };
+    room: {
       temperature: string;
       humidity: string;
     };

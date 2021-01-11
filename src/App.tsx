@@ -154,7 +154,7 @@ export class App extends React.Component<{}, State> {
           <Navbar.Collapse id="navigation">
             <Nav className="mr-auto">
               <NavItem linkTo="/plants" text="Plants" icon="branch" />
-              <NavItem linkTo="/history/intakecoolant/day" text="History" icon="history" />
+              <NavItem linkTo="/history/bloom_tent/day" text="History" icon="history" />
               <NavItem linkTo="/webcams" text="Webcams" icon="camera-alt" />
               <NavItem linkTo="/mining" text="Mining" icon="coin" />
               <NavItem linkTo="/commands" text="Commands" icon="dashboard" />

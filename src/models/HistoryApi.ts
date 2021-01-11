@@ -5,13 +5,13 @@ export default class HistoryApi {
   static readonly API = process.env.REACT_APP_API_HOST;
   static readonly SCOPES = ['day', 'week', 'month', 'year'];
   static readonly SENSORS = {
-    intakecoolant: {
-      name: 'Intake Coolant',
+    bloom_tent: {
+      name: 'Bloom Tent',
       environment: 'air',
       apiEndpoints: [
         {
-          path: 'air/temperature/intake_coolant',
-          attribute: 'air_intake_coolant_temperature',
+          path: 'air/temperature/bloom_tent',
+          attribute: 'air_bloom_tent_temperature',
           graphProps: {
             title: 'Temperature',
             units: '°C',
@@ -21,8 +21,8 @@ export default class HistoryApi {
           },
         },
         {
-          path: 'air/humidity/intake_coolant',
-          attribute: 'air_intake_coolant_humidity',
+          path: 'air/humidity/bloom_tent',
+          attribute: 'air_bloom_tent_humidity',
           graphProps: {
             title: 'Humidity',
             units: '%',
@@ -33,13 +33,13 @@ export default class HistoryApi {
         },
       ],
     },
-    intakeheatant: {
-      name: 'Intake Heatant',
+    grow_tent: {
+      name: 'Grow Tent',
       environment: 'air',
       apiEndpoints: [
         {
-          path: 'air/temperature/intake_heatant',
-          attribute: 'air_intake_heatant_temperature',
+          path: 'air/temperature/grow_tent',
+          attribute: 'air_grow_tent_temperature',
           graphProps: {
             title: 'Temperature',
             units: '°C',
@@ -49,36 +49,64 @@ export default class HistoryApi {
           },
         },
         {
-          path: 'air/humidity/intake_heatant',
-          attribute: 'air_intake_heatant_humidity',
+          path: 'air/humidity/grow_tent',
+          attribute: 'air_grow_tent_humidity',
           graphProps: { title: 'Humidity', units: '%', suggestedMin: 0, suggestedMax: 40, accent: 'red' as CardAccent },
         },
       ],
     },
-    tent: {
-      name: 'Tent',
+    heater: {
+      name: 'Heater',
       environment: 'air',
       apiEndpoints: [
         {
-          path: 'air/temperature/tent',
-          attribute: 'air_tent_temperature',
+          path: 'air/temperature/heater',
+          attribute: 'air_heater_temperature',
           graphProps: {
             title: 'Temperature',
             units: '°C',
             suggestedMin: 0,
             suggestedMax: 40,
-            accent: 'green' as CardAccent,
+            accent: 'red' as CardAccent,
           },
         },
         {
-          path: 'air/humidity/tent',
-          attribute: 'air_tent_humidity',
+          path: 'air/humidity/heater',
+          attribute: 'air_heater_humidity',
           graphProps: {
             title: 'Humidity',
             units: '%',
             suggestedMin: 0,
             suggestedMax: 40,
-            accent: 'green' as CardAccent,
+            accent: 'red' as CardAccent,
+          },
+        },
+      ],
+    },
+    room: {
+      name: 'Room',
+      environment: 'air',
+      apiEndpoints: [
+        {
+          path: 'air/temperature/room',
+          attribute: 'air_room_temperature',
+          graphProps: {
+            title: 'Temperature',
+            units: '°C',
+            suggestedMin: 0,
+            suggestedMax: 40,
+            accent: 'blue' as CardAccent,
+          },
+        },
+        {
+          path: 'air/humidity/room',
+          attribute: 'air_room_humidity',
+          graphProps: {
+            title: 'Humidity',
+            units: '%',
+            suggestedMin: 0,
+            suggestedMax: 40,
+            accent: 'blue' as CardAccent,
           },
         },
       ],

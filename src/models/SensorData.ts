@@ -19,7 +19,7 @@ export default class SensorData {
   update(json: JsonSensorDumpPi | JsonSensorDumpRig, type: 'pi' | 'rig'): SensorData {
     if (type === 'pi') {
       this.sensors = [
-        ...this.sensors.filter((sensor) => !['intakecoolant', 'intakeheatant', 'tent'].includes(sensor.identifier)),
+        ...this.sensors.filter((sensor) => !['bloom_tent', 'grow_tent', 'heater', 'room'].includes(sensor.identifier)),
         ...SensorData.deserializePiData(json as JsonSensorDumpPi),
       ];
     } else if (type === 'rig') {
@@ -35,68 +35,90 @@ export default class SensorData {
   static deserializePiData(json: JsonSensorDumpPi): Sensor[] {
     return [
       {
-        name: 'Intake Coolant',
+        name: 'Bloom Tent',
         environment: 'air',
-        identifier: 'intakecoolant',
-        accent: 'blue',
-        data: [
-          {
-            name: 'Temperature',
-            value: Number(json.air.intake_coolant.temperature),
-            unit: ' °C',
-            icon: 'temperature',
-            condition: false,
-          } as SensorMeasurement,
-          {
-            name: 'Humidity',
-            value: Number(json.air.intake_coolant.humidity),
-            unit: '%',
-            icon: 'cloud',
-            condition: false,
-          } as SensorMeasurement,
-        ],
-      } as Sensor,
-      {
-        name: 'Intake Heatant',
-        environment: 'air',
-        identifier: 'intakeheatant',
-        accent: 'red',
-        data: [
-          {
-            name: 'Temperature',
-            value: Number(json.air.intake_heatant.temperature),
-            unit: ' °C',
-            icon: 'temperature',
-            condition: false,
-          } as SensorMeasurement,
-          {
-            name: 'Humidity',
-            value: Number(json.air.intake_heatant.humidity),
-            unit: '%',
-            icon: 'cloud',
-            condition: false,
-          } as SensorMeasurement,
-        ],
-      } as Sensor,
-      {
-        name: 'Tent',
-        environment: 'air',
-        identifier: 'tent',
+        identifier: 'bloom_tent',
         accent: 'green',
         data: [
           {
             name: 'Temperature',
-            value: Number(json.air.tent.temperature),
+            value: Number(json.air.bloom_tent.temperature),
             unit: ' °C',
             icon: 'temperature',
-            condition: this.identifyCondition('tent_temp', Number(json.air.tent.temperature)),
+            condition: this.identifyCondition('tent_temp', Number(json.air.bloom_tent.temperature)),
           } as SensorMeasurement,
           {
             name: 'Humidity',
-            value: Number(json.air.tent.humidity),
+            value: Number(json.air.bloom_tent.humidity),
             unit: '%',
             icon: 'cloud',
-            condition: this.identifyCondition('tent_humid', Number(json.air.tent.humidity)),
+            condition: this.identifyCondition('tent_temp', Number(json.air.bloom_tent.temperature)),
+          } as SensorMeasurement,
+        ],
+      } as Sensor,
+      {
+        name: 'Grow Tent',
+        environment: 'air',
+        identifier: 'grow_tent',
+        accent: 'green',
+        data: [
+          {
+            name: 'Temperature',
+            value: Number(json.air.grow_tent.temperature),
+            unit: ' °C',
+            icon: 'temperature',
+            condition: this.identifyCondition('tent_temp', Number(json.air.grow_tent.temperature)),
+          } as SensorMeasurement,
+          {
+            name: 'Humidity',
+            value: Number(json.air.grow_tent.humidity),
+            unit: '%',
+            icon: 'cloud',
+            condition: this.identifyCondition('tent_temp', Number(json.air.grow_tent.temperature)),
+          } as SensorMeasurement,
+        ],
+      } as Sensor,
+      {
+        name: 'Heater',
+        environment: 'air',
+        identifier: 'heater',
+        accent: 'red',
+        data: [
+          {
+            name: 'Temperature',
+            value: Number(json.air.heater.temperature),
+            unit: ' °C',
+            icon: 'temperature',
+            condition: false,
+          } as SensorMeasurement,
+          {
+            name: 'Humidity',
+            value: Number(json.air.heater.humidity),
+            unit: '%',
+            icon: 'cloud',
+            condition: false,
+          } as SensorMeasurement,
+        ],
+      } as Sensor,
+      {
+        name: 'Room',
+        environment: 'air',
+        identifier: 'room',
+        accent: 'blue',
+        data: [
+          {
+            name: 'Temperature',
+            value: Number(json.air.room.temperature),
+            unit: ' °C',
+            icon: 'temperature',
+            condition: false,
+          } as SensorMeasurement,
+          {
+            name: 'Humidity',
+            value: Number(json.air.room.humidity),
+            unit: '%',
+            icon: 'cloud',
+            condition: false,
           } as SensorMeasurement,
         ],
       } as Sensor,
