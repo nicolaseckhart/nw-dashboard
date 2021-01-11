@@ -1,6 +1,8 @@
 import { GraphProps, HistoryApiEndpoint, HistoryScope, SensorIdentifier } from '../shared';
 import { CardAccent } from '../shared/interfaces';
 
+/* eslint-disable @typescript-eslint/camelcase */
+
 export default class HistoryApi {
   static readonly API = process.env.REACT_APP_API_HOST;
   static readonly SCOPES = ['day', 'week', 'month', 'year'];
